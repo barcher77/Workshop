@@ -1,0 +1,595 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:13px}
+select,input,textarea,button{font-family:var(--font-sans)}
+.app{display:flex;flex-direction:column;min-height:580px}
+.top-bar{padding:.6rem 1rem;border-bottom:.5px solid var(--color-border-tertiary);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.top-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-right:auto}
+.form-sel{display:flex;gap:5px;align-items:center}
+.form-sel label{font-size:12px;color:var(--color-text-secondary)}
+.toggles{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tog{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--color-text-secondary);cursor:pointer}
+.tog input{width:13px;height:13px;cursor:pointer}
+.main{display:flex;flex:1;overflow:hidden}
+.sidebar{width:200px;flex-shrink:0;border-right:.5px solid var(--color-border-tertiary);padding:.75rem;overflow-y:auto;display:flex;flex-direction:column;gap:0}
+.sb-h{font-size:10px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.form-info{font-size:11px;color:var(--color-text-secondary);line-height:1.5;margin-bottom:10px}
+.scheme-badge{display:inline-flex;width:18px;height:18px;border-radius:3px;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0}
+.scheme-row{display:flex;align-items:center;gap:5px;margin-bottom:2px;font-size:11px;color:var(--color-text-secondary)}
+.syl-mode{display:flex;gap:3px;margin:5px 0}
+.syl-mode button{flex:1;font-size:11px;padding:2px 0;border:.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;border-radius:var(--border-radius-md)}
+.syl-mode button.active{background:var(--color-background-secondary);color:var(--color-text-primary);font-weight:500}
+.custom-panel{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:.6rem;margin-bottom:.6rem;display:none}
+.custom-panel.visible{display:block}
+.cp-row{display:flex;flex-direction:column;gap:2px;margin-bottom:7px}
+.cp-row label{font-size:11px;color:var(--color-text-secondary)}
+.cp-row select,.cp-row input{font-size:12px;width:100%;padding:3px 5px}
+.cp-schemes{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.cp-schemes button{font-size:10px;padding:2px 6px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer}
+.cp-schemes button.sel{background:#dbeafe;color:#1e40af;border-color:#1e40af}
+.cp-apply{width:100%;font-size:12px;padding:4px;margin-top:3px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;font-weight:500}
+.cp-apply:hover{background:var(--color-background-secondary)}
+.ref-btn{margin-top:auto;padding-top:12px;width:100%;font-size:12px;padding:6px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s}
+.ref-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.workspace{flex:1;padding:.75rem 1rem;overflow-y:auto}
+.poem-title-input{width:100%;font-size:15px;font-weight:500;border:none;border-bottom:.5px solid var(--color-border-tertiary);padding:3px 0;margin-bottom:.75rem;background:transparent;color:var(--color-text-primary)}
+.poem-title-input::placeholder{color:var(--color-text-tertiary)}
+.poem-title-input:focus{outline:none;border-bottom:.5px solid var(--color-border-primary)}
+.line-group{margin-bottom:.5rem}
+.line-label{font-size:11px;color:var(--color-text-tertiary);margin-bottom:1px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.rhyme-tag{font-size:10px;padding:1px 5px;border-radius:3px;font-weight:500}
+.line-input{width:100%;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:5px 8px;font-size:14px;line-height:1.5;background:var(--color-background-primary);color:var(--color-text-primary);resize:none;overflow:hidden;min-height:32px;height:32px}
+.line-input:focus{outline:none;border-color:var(--color-border-primary)}
+.line-input.repeated{background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:not-allowed}
+.line-input.ok{border-color:#1D9E75}.line-input.warn{border-color:#BA7517}.line-input.error{border-color:#E24B4A}
+.line-fb{font-size:10px;margin-top:1px;min-height:12px}
+.line-fb.ok{color:#1D9E75}.line-fb.warn{color:#BA7517}.line-fb.error{color:#E24B4A}
+.sec-header{font-size:10px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:.7rem 0 4px;padding-bottom:3px;border-bottom:.5px solid var(--color-border-tertiary)}
+.closing-header{font-size:10px;font-weight:600;color:#854F0B;text-transform:uppercase;letter-spacing:.05em;margin:.7rem 0 4px;padding-bottom:3px;border-bottom:.5px solid #FAEEDA;display:flex;align-items:center;gap:6px}
+.closing-badge{font-size:9px;padding:1px 6px;background:#FAEEDA;color:#854F0B;border-radius:3px;font-weight:600}
+.extend-bar{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin:.75rem 0 .25rem;padding:.5rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:.5px dashed var(--color-border-secondary)}
+.extend-bar-label{font-size:11px;color:var(--color-text-secondary);flex:1;min-width:80px}
+.ebtn{font-size:11px;padding:3px 9px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;white-space:nowrap}
+.ebtn:hover:not(:disabled){background:var(--color-background-secondary)}
+.ebtn:disabled{opacity:.4;cursor:not-allowed}
+.ebtn.close-btn{background:#FAEEDA;color:#854F0B;border-color:#e8c97a}
+.ebtn.close-btn:hover:not(:disabled){background:#f5dfa0}
+.ebtn.unclose-btn{background:#FAECE7;color:#993C1D;border-color:#e8a07a}
+.ebtn.unclose-btn:hover{background:#f5c0a0}
+.actions{display:flex;gap:6px;margin-top:.75rem;flex-wrap:wrap}
+.actions button{font-size:12px;padding:4px 11px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
+.actions button:hover{background:var(--color-background-secondary)}
+.output-area{margin-top:.75rem;padding:.75rem 1rem;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);white-space:pre-wrap;font-size:14px;line-height:1.9;color:var(--color-text-primary);display:none;font-family:var(--font-serif)}
+.meter-hint{font-size:10px;color:var(--color-text-tertiary);margin-top:1px;font-style:italic}
+.maqta-note{font-size:11px;color:#854F0B;background:#FAEEDA;border-radius:var(--border-radius-md);padding:.4rem .6rem;margin-bottom:.4rem;line-height:1.5}
+
+/* ── dialogs ── */
+.dialog-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:1000}
+.dialog-overlay.open{display:flex}
+.dialog{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1.25rem;max-width:440px;width:92%;box-shadow:0 8px 32px rgba(0,0,0,.18);max-height:90vh;display:flex;flex-direction:column}
+.dialog h3{font-size:14px;font-weight:600;color:var(--color-text-primary);margin-bottom:.5rem;flex-shrink:0}
+.dialog p{font-size:12px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:.75rem;flex-shrink:0}
+.dialog-options{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}
+.dialog-opt{border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:.6rem .75rem;cursor:pointer;background:var(--color-background-primary);text-align:left}
+.dialog-opt:hover{background:var(--color-background-secondary);border-color:var(--color-border-primary)}
+.dialog-opt strong{font-size:12px;color:var(--color-text-primary);display:block;margin-bottom:2px}
+.dialog-opt span{font-size:11px;color:var(--color-text-secondary);line-height:1.5}
+.dialog-cancel{width:100%;font-size:12px;padding:5px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-secondary);cursor:pointer;flex-shrink:0}
+.dialog-cancel:hover{background:var(--color-background-secondary)}
+
+/* ── reference library dialog ── */
+.ref-dialog{max-width:600px;width:95%;max-height:88vh}
+.ref-dialog-body{flex:1;overflow-y:auto;margin-bottom:.75rem}
+.ref-search{width:100%;font-size:13px;padding:6px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);margin-bottom:.75rem;flex-shrink:0}
+.ref-search:focus{outline:none;border-color:var(--color-border-primary)}
+.ref-cat-header{font-size:10px;font-weight:700;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.07em;padding:.4rem 0 .3rem;border-bottom:.5px solid var(--color-border-tertiary);margin-bottom:.25rem;position:sticky;top:0;background:var(--color-background-primary)}
+.ref-entry{border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);margin-bottom:.35rem;overflow:hidden}
+.ref-entry-header{display:flex;align-items:center;gap:8px;padding:.45rem .6rem;cursor:pointer;user-select:none;background:var(--color-background-primary)}
+.ref-entry-header:hover{background:var(--color-background-secondary)}
+.ref-entry-name{font-size:12px;font-weight:500;color:var(--color-text-primary);flex:1}
+.ref-entry-cat{font-size:10px;color:var(--color-text-tertiary);flex-shrink:0}
+.ref-chevron{font-size:10px;color:var(--color-text-tertiary);flex-shrink:0;transition:transform .15s}
+.ref-entry.open .ref-chevron{transform:rotate(90deg)}
+.ref-entry-body{display:none;padding:.6rem .75rem;background:var(--color-background-secondary);border-top:.5px solid var(--color-border-tertiary);font-size:12px;color:var(--color-text-secondary);line-height:1.65}
+.ref-entry.open .ref-entry-body{display:block}
+.ref-entry-body .ref-section{margin-bottom:.5rem}
+.ref-entry-body .ref-section:last-child{margin-bottom:0}
+.ref-entry-body .ref-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:2px}
+.ref-use-btn{font-size:11px;padding:3px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;margin-top:.5rem}
+.ref-use-btn:hover{background:var(--color-background-secondary)}
+.ref-no-results{font-size:12px;color:var(--color-text-tertiary);padding:.75rem 0;text-align:center}
+</style>
+</head>
+<body>
+
+<!-- Pantoum closing dialog -->
+<div class="dialog-overlay" id="pantoumDialog">
+  <div class="dialog">
+    <h3>Choose a pantoum closing</h3>
+    <p>A pantoum's final stanza uses lines from the <strong>first stanza</strong> to bring the poem full circle. There are two traditional arrangements:</p>
+    <div class="dialog-options">
+      <button class="dialog-opt" onclick="applyPantoumClose('circular')">
+        <strong>Option A — Circular closure</strong>
+        <span>Lines 2 &amp; 4 of the first stanza become lines 1 &amp; 3 of the final stanza. Lines 1 &amp; 3 of the first stanza become lines 2 &amp; 4. The very first line of your poem is also its very last — the poem ends where it began.</span>
+      </button>
+      <button class="dialog-opt" onclick="applyPantoumClose('reversed')">
+        <strong>Option B — Reversed closure</strong>
+        <span>Lines 2 &amp; 4 of the first stanza become lines 1 &amp; 3, and lines 3 &amp; 1 (reversed) become lines 2 &amp; 4. This creates a slightly different feeling of resolution — the poem circles back but lands differently.</span>
+      </button>
+    </div>
+    <button class="dialog-cancel" onclick="closePantoumDialog()">cancel</button>
+  </div>
+</div>
+
+<!-- Reference library dialog -->
+<div class="dialog-overlay" id="refDialog">
+  <div class="dialog ref-dialog">
+    <h3>📖 poetry form reference</h3>
+    <input class="ref-search" id="refSearch" placeholder="search forms…" oninput="filterRef(this.value)">
+    <div class="ref-dialog-body" id="refBody"></div>
+    <button class="dialog-cancel" onclick="closeRef()">close</button>
+  </div>
+</div>
+
+<div class="app">
+  <div class="top-bar">
+    <div class="top-title">🪶 poetry workshop</div>
+    <div class="form-sel"><label>form:</label><select id="formSelect" style="font-size:13px;padding:3px 6px"></select></div>
+    <div class="toggles">
+      <label class="tog"><input type="checkbox" id="togRhyme" checked> rhyme</label>
+      <label class="tog"><input type="checkbox" id="togMeter" checked> meter</label>
+      <label class="tog"><input type="checkbox" id="togSlant"> slant</label>
+    </div>
+  </div>
+  <div class="main">
+    <div class="sidebar">
+      <div class="sb-h">form</div>
+      <div class="form-info" id="formInfo"></div>
+      <div id="customPanel" class="custom-panel">
+        <div class="cp-row"><label>lines in poem</label><input type="number" id="cpLines" value="8" min="1" max="60" style="width:55px"></div>
+        <div class="cp-row">
+          <label>rhyme scheme</label>
+          <div class="cp-schemes" id="cpSchemePresets"></div>
+          <input type="text" id="cpSchemeCustom" placeholder="e.g. ABABCC" style="margin-top:4px" maxlength="40">
+          <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:2px">pick preset or type your own</div>
+        </div>
+        <div class="cp-row">
+          <label>metrical foot</label>
+          <select id="cpFoot">
+            <option value="none">none / free</option>
+            <option value="iambic">iambic (da-DUM)</option>
+            <option value="trochaic">trochaic (DUM-da)</option>
+            <option value="anapestic">anapestic (da-da-DUM)</option>
+            <option value="dactylic">dactylic (DUM-da-da)</option>
+            <option value="spondaic">spondaic (DUM-DUM)</option>
+            <option value="amphibrachic">amphibrachic (da-DUM-da)</option>
+            <option value="pyrrhic">pyrrhic (da-da)</option>
+          </select>
+        </div>
+        <div class="cp-row" id="cpFeetRow">
+          <label>feet per line</label>
+          <select id="cpFeet">
+            <option value="1">monometer (1)</option><option value="2">dimeter (2)</option><option value="3">trimeter (3)</option><option value="4">tetrameter (4)</option>
+            <option value="5" selected>pentameter (5)</option><option value="6">hexameter (6)</option><option value="7">heptameter (7)</option><option value="8">octameter (8)</option>
+          </select>
+        </div>
+        <button class="cp-apply" onclick="applyCustomForm()">apply & build template</button>
+      </div>
+      <div id="schemeDisplay"></div>
+      <div id="meterPanel" style="margin-top:8px">
+        <div class="sb-h">meter</div>
+        <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px" id="meterDesc"></div>
+        <div class="syl-mode"><button class="active" id="btnSyl" onclick="setMeterMode('syllable')">syllable</button><button id="btnStress" onclick="setMeterMode('stress')">stress</button></div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);line-height:1.4" id="meterModeDesc"></div>
+      </div>
+      <div style="flex:1"></div>
+      <button class="ref-btn" onclick="openRef()" style="margin-top:16px">
+        <span>📖</span><span>form reference library</span>
+      </button>
+    </div>
+    <div class="workspace">
+      <input class="poem-title-input" id="poemTitle" placeholder="untitled poem…">
+      <div id="templateArea"></div>
+      <div class="actions">
+        <button onclick="clearPoem()">↺ clear</button>
+        <button onclick="showPoem()">👁 view</button>
+        <button onclick="copyPoem()">⎘ copy</button>
+      </div>
+      <div class="output-area" id="outputArea"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── reference data ────────────────────────────────────────────────────────────
+const REF_DATA=[
+  {cat:"Fixed syllabic",name:"Haiku",
+    what:"A three-line Japanese poem with a strict 5-7-5 syllable structure, traditionally evoking a moment in nature, a season, or a sensory image.",
+    history:"Haiku evolved from the opening verse (hokku) of the collaborative renga form in 15th-century Japan. The poet Matsuo Bashō (1644–1694) elevated it into a standalone art form, followed by Yosa Buson and Kobayashi Issa. The word 'haiku' was coined by Masaoka Shiki in the late 19th century. Western poets embraced it in the early 20th century through the Imagist movement.",
+    use:"Best used for capturing a fleeting moment, a natural image, or a sudden emotional insight. Traditionally includes a kigo (seasonal word) and a kireji (cutting word) that creates a pause or contrast between two images."},
+  {cat:"Fixed syllabic",name:"Senryū",
+    what:"A three-line Japanese form identical in structure to haiku (5-7-5), but focused on human nature, irony, and humor rather than nature and seasons.",
+    history:"Named after the 18th-century Japanese poet Karai Senryū, whose anthology of comic verse popularized the form. While haiku traditionally require a seasonal reference, senryū have no such constraint — making them more urban, satirical, and psychologically direct.",
+    use:"Best used for wry observations about human behavior, relationships, and social situations. Often darker or funnier than haiku. No seasonal word required."},
+  {cat:"Fixed syllabic",name:"Tanka",
+    what:"A five-line Japanese poem with a 5-7-5-7-7 syllable structure. The first three lines (the 'upper verse') present an image; the final two (the 'lower verse') add a personal reflection or turn.",
+    history:"One of the oldest Japanese poetic forms, dating to the 7th century. It dominated Japanese court poetry for centuries and was the primary form in the Manyoshu (c. 759 CE). When haiku emerged as an independent form, tanka continued as a vehicle for personal emotion and lyric reflection. It remains widely practiced in Japan today.",
+    use:"Best used for poems that pair an external image with an inner emotional response. The volta between lines 3 and 4 is the heart of the form — a shift from observation to feeling."},
+  {cat:"Fixed syllabic",name:"Cinquain",
+    what:"A five-line American syllabic poem with a 2-4-6-8-2 structure, creating a shape that swells and then contracts.",
+    history:"Invented by American poet Adelaide Crapsey (1878–1914), who was influenced by Japanese syllabic forms and French vers libre. Published posthumously in 1915. Several variants have since emerged, including word-count cinquains popular in schools.",
+    use:"Best used for compact lyric poems where the short closing line delivers a final punch, reversal, or image. The pyramidal shape lends itself to building momentum before a sudden collapse."},
+  {cat:"Rhyming",name:"Sonnet (Shakespearean)",
+    what:"A 14-line poem in iambic pentameter, divided into three quatrains (ABAB CDCD EFEF) and a closing couplet (GG). The couplet typically delivers the poem's resolution or turn.",
+    history:"The English or Shakespearean sonnet developed from the Italian sonnet imported by Thomas Wyatt and Henry Howard in the 16th century. Shakespeare's 154 sonnets (published 1609) defined the form for the English tradition. It became the dominant lyric form of the Renaissance and continues to be widely written today.",
+    use:"Best used for poems that build an argument, meditation, or emotional situation across three quatrains and then resolve it — often with a surprising or epigrammatic couplet. The iambic pentameter mirrors natural English speech rhythms."},
+  {cat:"Rhyming",name:"Sonnet (Petrarchan)",
+    what:"A 14-line poem divided into an octave (ABBAABBA) and a sestet (CDECDE or variant). A volta — a turn in thought or feeling — separates them.",
+    history:"Developed by the Italian poet Francesco Petrarca (Petrarch, 1304–1374) in his Canzoniere, a sequence of 366 poems addressed to a woman named Laura. Introduced to England by Thomas Wyatt in the 1530s. The stricter rhyme scheme (only two rhyme sounds in the octave) is considered more demanding than the Shakespearean variant.",
+    use:"Best used when the poem has a clear two-part structure: a problem, question, or situation in the octave, and an answer, resolution, or shift in the sestet. The volta is the emotional and intellectual hinge of the poem."},
+  {cat:"Rhyming",name:"Limerick",
+    what:"A five-line comic poem with AABBA rhyme and a strong anapestic bounce. Lines 1, 2, and 5 are longer; lines 3 and 4 are shorter.",
+    history:"The form was popularized — though not invented — by Edward Lear in his Book of Nonsense (1846). The name may derive from Limerick, Ireland, though the connection is disputed. Limericks have been a vehicle for wit, wordplay, and bawdy humor for nearly two centuries.",
+    use:"Almost exclusively comic or satirical. The bouncy anapestic rhythm and the setup-punchline structure (lines 1-2 set up, lines 3-4 develop, line 5 delivers the joke) make it ideal for wordplay and surprise endings."},
+  {cat:"Rhyming",name:"Ballad stanza",
+    what:"A four-line stanza alternating between lines of roughly 8 and 6 syllables (iambic tetrameter and trimeter), with an ABCB rhyme scheme.",
+    history:"Rooted in oral tradition and folk song, the ballad stanza is one of the oldest forms in English poetry. It was the meter of medieval ballads like 'Barbara Allen' and 'Lord Randal,' and was later adopted by poets like Blake, Keats, and Coleridge ('The Rime of the Ancient Mariner'). Its sing-song quality reflects its origins in music.",
+    use:"Best used for narrative poems — telling a story with momentum. The short line 4 creates a natural pause, ideal for a refrain or a quiet emotional beat. Works well for folk-inflected, dramatic, or gothic subject matter."},
+  {cat:"Rhyming",name:"Heroic couplets",
+    what:"Pairs of rhyming lines in iambic pentameter. The closed couplet — where each pair forms a complete grammatical and logical unit — is the most celebrated variant.",
+    history:"Used by Chaucer in the 14th century and perfected as an instrument of wit and argument by John Dryden and Alexander Pope in the 17th and 18th centuries. Pope's Rape of the Lock and Essay on Man demonstrate the form at its most precise and epigrammatic. Fell out of fashion with the Romantics but never disappeared.",
+    use:"Excellent for satire, argument, and aphoristic writing. The tight constraint of the couplet rewards compression — every word must earn its place. The form can feel stiff for emotional lyric poetry but shines for wit and intellectual content."},
+  {cat:"Rhyming",name:"Terza rima",
+    what:"An interlocking chain-rhyme scheme: ABA BCB CDC, continuing indefinitely, traditionally closed with a single line or couplet rhyming the middle line of the last tercet.",
+    history:"Invented by Dante Alighieri for the Divine Comedy (c. 1308–1320), one of the most ambitious uses of a verse form in literary history. Later adopted by Petrarch and Boccaccio. In English, Shelley used it brilliantly in 'Ode to the West Wind' (1820). The interlocking rhymes create a sense of forward momentum and inevitability.",
+    use:"Best used for sustained, serious, or visionary poems. The chain structure means no stanza is fully closed — each one reaches forward into the next, creating a powerful sense of motion. Demanding to write in English due to its rhyme requirements."},
+  {cat:"Rhyming",name:"Ottava rima",
+    what:"An eight-line stanza in iambic pentameter with ABABABCC rhyme. The closing couplet often provides a comic or ironic deflation of the six preceding lines.",
+    history:"An Italian form used by Boccaccio and Ariosto. In English, it reached its height in Byron's Don Juan (1819–1824), where Byron exploited the couplet's comic potential to devastating effect. Keats also used it in 'Isabella.' The form demands facility with multiple rhymes over six lines before the couplet release.",
+    use:"Remarkably versatile — works for heroic narrative and for comic, mock-heroic, and satirical verse. The six-line build followed by a couplet release creates natural dramatic rhythm. Byron's use of the closing couplet for a sudden tonal shift is a technique worth studying and imitating."},
+  {cat:"Rhyming",name:"Spenserian stanza",
+    what:"A nine-line stanza: eight lines of iambic pentameter followed by an alexandrine (iambic hexameter), with ABABBCBCC rhyme.",
+    history:"Invented by Edmund Spenser for The Faerie Queene (1590–1596), an epic allegorical poem. Later used by Burns, Keats ('The Eve of St. Agnes'), Byron ('Childe Harold's Pilgrimage'), and Shelley ('Adonais'). The alexandrine — the long ninth line — gives each stanza a sense of grandeur and conclusion.",
+    use:"Best suited to long, ambitious narrative or meditative poems. The complex rhyme scheme and the extended closing line create a stately, ceremonial quality. Demanding but rewarding — the constraint forces compression and inventiveness."},
+  {cat:"Repetition forms",name:"Villanelle",
+    what:"A 19-line poem with two refrains and two rhyme sounds. Five tercets alternate the two refrains as their third lines; the closing quatrain ends with both refrains together.",
+    history:"French in origin but developed by Italian poets. Dylan Thomas's 'Do Not Go Gentle into That Good Night' (1951) made it one of the most celebrated forms in English. Elizabeth Bishop's 'One Art' is another landmark example. The obsessive repetition of the refrains suits themes of grief, fixation, and inevitability.",
+    use:"The repeated refrains should be lines that can accumulate meaning and emotional weight with each repetition — lines that mean slightly differently each time they return. Best used for poems about loss, obsession, memory, or any subject where circling back is thematically appropriate."},
+  {cat:"Repetition forms",name:"Pantoum",
+    what:"An interlocking quatrain form where lines 2 and 4 of each stanza become lines 1 and 3 of the next. The final stanza loops back to incorporate lines from the first stanza.",
+    history:"Adapted from the Malay pantun by French poets in the 19th century, notably Leconte de Lisle and Charles Baudelaire. Later popularized in English by John Ashbery and Carolyn Kizer. The form's recursive structure — lines keep returning — gives it a dreamlike, incantatory quality.",
+    use:"Best used for poems that circle back on themselves thematically — memory, obsession, ritual, or dream. Because each line appears twice in different contexts, choose lines that can shift meaning with their surroundings. The closing stanza's return to the opening lines gives the poem a sense of inevitable return."},
+  {cat:"Repetition forms",name:"Triolet",
+    what:"An eight-line French form where the first line repeats as lines 4 and 7, and lines 1–2 repeat as lines 7–8. Only two rhyme sounds are used throughout.",
+    history:"A medieval French form revived by poets in the 19th century. Hardy, Dobson, and later Wendy Cope wrote notable triolets. Its compressed repetition makes it feel more like a riddle or a musical round than a conventional poem.",
+    use:"Best used for short, playful, or ironic poems where the repeated lines can take on new resonance. The tight constraint rewards wit. Because it's so short, every word choice matters enormously."},
+  {cat:"Repetition forms",name:"Rondeau",
+    what:"A 15-line French form using only two rhyme sounds. The opening words return twice as a short refrain (rentrement) at lines 9 and 15.",
+    history:"A major form of French poetry from the 14th through 17th centuries, used by Clément Marot and Charles d'Orléans. In English, John McCrae's 'In Flanders Fields' (1915) is perhaps the most famous example. The form creates a sense of circularity and return through its rentrement.",
+    use:"Best used for poems with a strong, memorable opening phrase that can resonate differently when it returns as a refrain. The rentrement — just two or three words — must be chosen with great care, as it carries the emotional weight of the poem's conclusion."},
+  {cat:"Eastern forms",name:"Ghazal",
+    what:"A series of autonomous couplets sharing an end-word or refrain (radif) and a preceding rhyme (radif). The final couplet (maqta) traditionally includes the poet's name or signature.",
+    history:"One of the oldest poetic forms in the world, originating in 7th-century Arabia and developed in Persian, Urdu, and Turkish poetry by poets including Rumi, Hafiz, and Ghalib. Introduced to English poetry through translations and later practiced by Agha Shahid Ali, who championed strict formal ghazals in English.",
+    use:"Each couplet should stand alone as an independent image or thought — unlike Western stanza forms, couplets need not build on each other. The binding element is the radif (end-word/phrase), which should appear at the end of both lines of the first couplet and the second line of every subsequent couplet. The maqta's self-naming is a traditional signature of the form."},
+  {cat:"Eastern forms",name:"Renga (opening)",
+    what:"A collaborative Japanese linked-verse form. This template covers the opening hokku (5-7-5) and the first responding wakiku (7-7), which together form the seed of the full renga.",
+    history:"Renga flourished in Japan from the 13th through 16th centuries as a social and artistic practice — poets would gather and compose linked verses collaboratively, sometimes over days. The hokku (opening verse) eventually became the independent haiku. Basho was a master of both forms.",
+    use:"The hokku sets the season, mood, and imagery of the entire linked poem. The wakiku should respond to and extend — but not simply repeat — the hokku's imagery. In a full renga, subsequent poets would continue the chain, shifting mood and image with each link."},
+  {cat:"Ode forms",name:"Pindaric ode",
+    what:"A three-part Greek choral ode: strophe (the turn), antistrophe (the counter-turn), and epode (the stand). The strophe and antistrophe share the same metrical structure; the epode differs.",
+    history:"Named for the Greek lyric poet Pindar (c. 518–438 BCE), who wrote odes celebrating athletes at the Olympic and other Panhellenic games. Originally performed by choruses with dance movements. Adapted into English by Ben Jonson and Abraham Cowley in the 17th century, though often loosely.",
+    use:"Best used for celebratory, public, or ceremonial subjects. The three-part structure naturally suits poems that present a situation, respond to it, and then draw a conclusion. The form's grandeur can feel elevated or ponderous depending on execution."},
+  {cat:"Ode forms",name:"Horatian ode",
+    what:"A lyric ode in regular, equal stanzas — typically quatrains — with a calm, reflective, and personal tone, in contrast to the public grandeur of the Pindaric ode.",
+    history:"Named for the Roman poet Horace (65–8 BCE), whose Odes are intimate meditations on friendship, mortality, love, and the pleasures of simple life. Adapted into English by Marvell ('An Horatian Ode'), Collins, Keats, and others. The form's regularity and restraint suit personal, philosophical reflection.",
+    use:"Best used for meditative, personal, or philosophical poems where you want a sense of quiet formal control. Unlike the Pindaric ode, there's no prescribed three-part structure — the poem simply develops across equal stanzas. Add as many stanzas as the thought requires."},
+  {cat:"Elegiac",name:"Elegiac couplet",
+    what:"The classical Greek and Roman elegiac meter: alternating lines of dactylic hexameter and dactylic pentameter. In syllabic approximation, roughly 12 and 10 syllables.",
+    history:"The dominant meter of ancient elegy, epigram, and love poetry. Used by Ovid in the Amores and Tristia, Tibullus, Propertius, and the Greek Anthology poets. In English, it is usually approximated rather than strictly reproduced, since quantitative meter does not map easily onto stress-based English.",
+    use:"Best used for love poems, laments, meditations, and epigrams — the full range of classical elegiac subject matter. The contrast between the longer hexameter and shorter pentameter lines creates a natural ebb and flow, like the tide."},
+  {cat:"Elegiac",name:"Elegy (free verse)",
+    what:"A poem of mourning, loss, or lamentation in free verse. The template provides structural prompts — opening, remembrance, closing — as a loose scaffold.",
+    history:"The elegy is one of the oldest poetic modes, from classical antiquity through Milton's Lycidas, Tennyson's In Memoriam, Whitman's 'When Lilacs Last in the Dooryard Bloom'd,' and Rilke's Duino Elegies. Modern elegies often resist consolation, sitting with grief rather than resolving it.",
+    use:"Best used to mourn a person, a place, a relationship, or an era. The three-part scaffold — loss, remembrance, acceptance or question — is a natural emotional arc, but need not be followed strictly. The most powerful elegies often resist easy consolation."},
+  {cat:"Elegiac",name:"Epitaph",
+    what:"A short memorial poem or inscription, often rhymed, intended to commemorate the dead. Typically compact, formal, and resonant.",
+    history:"One of the oldest poetic forms — epitaphs appear on Greek and Roman tombstones and in the Greek Anthology. In English, Ben Jonson, Dryden, and Pope all wrote notable epitaphs. The form demands extraordinary compression: a life, a loss, and a feeling in four lines.",
+    use:"Best used for compression and tribute. Every word must carry weight. The rhyme scheme gives the poem a sense of closure and permanence. Can be sincere, ironic, or even darkly comic — the form has been used for all three."},
+  {cat:"Acrostic & visual",name:"Acrostic",
+    what:"A poem where the first letters of each line, read vertically, spell out a word, name, or message.",
+    history:"A form with ancient roots — acrostics appear in the Hebrew Bible (Psalm 119) and the works of Roman poets. Medieval poets used them as signatures. Lewis Carroll wrote acrostic poems for Alice Liddell. They remain popular as personalized poems for children and as puzzles.",
+    use:"Best used when the hidden word or name is itself meaningful — a person's name, a theme, a dedication. The constraint of the first letter forces unexpected word choices, which can produce surprising and beautiful lines. Let the constraint work for you rather than against you."},
+  {cat:"Free verse",name:"Free verse",
+    what:"Poetry without fixed meter, rhyme scheme, or line length. The poet determines all formal choices — lineation, rhythm, repetition — based on the needs of the poem.",
+    history:"Free verse (vers libre) was pioneered in France in the 1880s and embraced by Walt Whitman in Leaves of Grass (1855). The Imagists — Pound, H.D., Amy Lowell — made it the dominant mode of 20th-century poetry. Most contemporary poetry is written in some form of free verse.",
+    use:"Best used when the subject matter, voice, or emotional content demands freedom from received form. The absence of fixed constraints doesn't mean the absence of craft — the best free verse is intensely deliberate about rhythm, sound, and lineation. Every line break is a choice."},
+  {cat:"Free verse",name:"Prose poem",
+    what:"A poem written in continuous prose — no line breaks — but with the compression, imagery, attention to sound, and emotional intensity of poetry.",
+    history:"Associated with Baudelaire's Paris Spleen (1869), widely considered the founding text of the prose poem as a conscious form. Later developed by Rimbaud, Ponge, and in English by Russell Edson, Claudia Rankine, and many others. The form deliberately collapses the boundary between poetry and prose.",
+    use:"Best used when lineation would feel artificial or when the subject calls for a sustained, immersive texture rather than the pause of a line break. Works well for dream sequences, memories, and surreal or associative content. The paragraph is the basic unit of form."},
+];
+
+// ── unit generators ───────────────────────────────────────────────────────────
+function pantoumUnit(n){const s=n+1,p=n;if(n===0)return[{id:`s${s}l1`,label:`stanza ${s}, line 1`},{id:`s${s}l2`,label:`stanza ${s}, line 2`},{id:`s${s}l3`,label:`stanza ${s}, line 3`},{id:`s${s}l4`,label:`stanza ${s}, line 4`}];return[{id:`s${s}l1`,label:`stanza ${s}, line 1`,repeats:`s${p}l2`},{id:`s${s}l2`,label:`stanza ${s}, line 2`},{id:`s${s}l3`,label:`stanza ${s}, line 3`,repeats:`s${p}l4`},{id:`s${s}l4`,label:`stanza ${s}, line 4`}];}
+function ghazalUnit(n){const c=n+1;if(n===0)return[{id:`g${c}l1`,label:`couplet ${c}, line 1 (ends with radif)`},{id:`g${c}l2`,label:`couplet ${c}, line 2 (ends with radif)`}];return[{id:`g${c}l1`,label:`couplet ${c}, line 1`},{id:`g${c}l2`,label:`couplet ${c}, line 2 (ends with radif)`}];}
+function horatianUnit(n){const s=n+1,L=["A","B","C","D","E","F","G","H"],a=L[(n*2)%L.length],b=L[(n*2+1)%L.length];return[{id:`ho${s}l1`,label:`stanza ${s}, line 1`,rhyme:a},{id:`ho${s}l2`,label:`stanza ${s}, line 2`,rhyme:b},{id:`ho${s}l3`,label:`stanza ${s}, line 3`,rhyme:a},{id:`ho${s}l4`,label:`stanza ${s}, line 4`,rhyme:b}];}
+function heroicUnit(n){const c=n+1,L=["A","B","C","D","E","F","G","H"],r=L[n%L.length];return[{id:`hc${c}l1`,label:`couplet ${c}, line 1`,rhyme:r,syl:10},{id:`hc${c}l2`,label:`couplet ${c}, line 2`,rhyme:r,syl:10}];}
+function terzaUnit(n){const t=n+1,L=["A","B","C","D","E","F","G","H"],ra=L[n%L.length],rb=L[(n+1)%L.length];return[{id:`tz${t}l1`,label:`tercet ${t}, line 1`,rhyme:ra,syl:10},{id:`tz${t}l2`,label:`tercet ${t}, line 2`,rhyme:rb,syl:10},{id:`tz${t}l3`,label:`tercet ${t}, line 3`,rhyme:ra,syl:10}];}
+function spensUnit(n){const s=n+1;return[{id:`sp${s}l1`,label:`stanza ${s}, line 1`,rhyme:"A",syl:10},{id:`sp${s}l2`,label:`stanza ${s}, line 2`,rhyme:"B",syl:10},{id:`sp${s}l3`,label:`stanza ${s}, line 3`,rhyme:"A",syl:10},{id:`sp${s}l4`,label:`stanza ${s}, line 4`,rhyme:"B",syl:10},{id:`sp${s}l5`,label:`stanza ${s}, line 5`,rhyme:"B",syl:10},{id:`sp${s}l6`,label:`stanza ${s}, line 6`,rhyme:"C",syl:10},{id:`sp${s}l7`,label:`stanza ${s}, line 7`,rhyme:"B",syl:10},{id:`sp${s}l8`,label:`stanza ${s}, line 8`,rhyme:"C",syl:10},{id:`sp${s}l9`,label:`stanza ${s}, line 9 (alexandrine)`,rhyme:"C",syl:12}];}
+function ottavaUnit(n){const s=n+1;return[{id:`ot${s}l1`,label:`stanza ${s}, line 1`,rhyme:"A",syl:10},{id:`ot${s}l2`,label:`stanza ${s}, line 2`,rhyme:"B",syl:10},{id:`ot${s}l3`,label:`stanza ${s}, line 3`,rhyme:"A",syl:10},{id:`ot${s}l4`,label:`stanza ${s}, line 4`,rhyme:"B",syl:10},{id:`ot${s}l5`,label:`stanza ${s}, line 5`,rhyme:"A",syl:10},{id:`ot${s}l6`,label:`stanza ${s}, line 6`,rhyme:"B",syl:10},{id:`ot${s}l7`,label:`stanza ${s}, line 7`,rhyme:"C",syl:10},{id:`ot${s}l8`,label:`stanza ${s}, line 8`,rhyme:"C",syl:10}];}
+function balladUnit(n){const s=n+1;return[{id:`ba${s}l1`,label:`stanza ${s}, line 1`,rhyme:"A",syl:8},{id:`ba${s}l2`,label:`stanza ${s}, line 2`,rhyme:"B",syl:6},{id:`ba${s}l3`,label:`stanza ${s}, line 3`,rhyme:"C",syl:8},{id:`ba${s}l4`,label:`stanza ${s}, line 4`,rhyme:"B",syl:6}];}
+function elegyCoupletUnit(n){const c=n+1;return[{id:`el${c}l1`,label:`couplet ${c}, hexameter`,syl:12},{id:`el${c}l2`,label:`couplet ${c}, pentameter`,syl:10}];}
+
+const RC={A:["#E6F1FB","#185FA5"],B:["#E1F5EE","#0F6E56"],C:["#FAEEDA","#854F0B"],D:["#FAECE7","#993C1D"],E:["#FBEAF0","#993556"],F:["#EEEDFE","#534AB7"],G:["#EAF3DE","#3B6D11"],H:["#FCEBEB","#A32D2D"],A1:["#E6F1FB","#185FA5"],A2:["#FAEEDA","#854F0B"]};
+function rc(r){const k=r?r.toUpperCase().replace(/\d/,""):null;return RC[k]||["#F1EFE8","#5F5E5A"];}
+const FOOT_SYL={iambic:2,trochaic:2,anapestic:3,dactylic:3,spondaic:2,amphibrachic:3,pyrrhic:2,none:0};
+const FOOT_PAT={iambic:"uS",trochaic:"Su",anapestic:"uuS",dactylic:"Suu",spondaic:"SS",amphibrachic:"uSu",pyrrhic:"uu"};
+const FEET_NAME=["","monometer","dimeter","trimeter","tetrameter","pentameter","hexameter","heptameter","octameter"];
+const SCHEME_PRESETS=["ABAB","AABB","ABBA","ABCABC","ABABCC","AABBCC","ABCB","AAAA","ABCD"];
+
+const FORMS=[
+  {cat:"Fixed syllabic",name:"Haiku",desc:"Three-line Japanese form capturing a moment in nature.",meter:{type:"syllable",counts:[5,7,5]},extensible:false,lines:[{id:"L1",label:"line 1",syl:5},{id:"L2",label:"line 2",syl:7},{id:"L3",label:"line 3",syl:5}]},
+  {cat:"Fixed syllabic",name:"Senryū",desc:"Like haiku but focused on human nature, not seasons.",meter:{type:"syllable",counts:[5,7,5]},extensible:false,lines:[{id:"L1",label:"line 1",syl:5},{id:"L2",label:"line 2",syl:7},{id:"L3",label:"line 3",syl:5}]},
+  {cat:"Fixed syllabic",name:"Tanka",desc:"Five-line Japanese form — extended haiku with a reflective turn.",meter:{type:"syllable",counts:[5,7,5,7,7]},extensible:false,lines:[{id:"L1",label:"line 1",syl:5},{id:"L2",label:"line 2",syl:7},{id:"L3",label:"line 3",syl:5},{id:"L4",label:"line 4",syl:7},{id:"L5",label:"line 5",syl:7}]},
+  {cat:"Fixed syllabic",name:"Cinquain",desc:"Five-line American syllabic form (2-4-6-8-2).",meter:{type:"syllable",counts:[2,4,6,8,2]},extensible:false,lines:[{id:"L1",label:"line 1",syl:2},{id:"L2",label:"line 2",syl:4},{id:"L3",label:"line 3",syl:6},{id:"L4",label:"line 4",syl:8},{id:"L5",label:"line 5",syl:2}]},
+  {cat:"Rhyming",name:"Sonnet (Shakespearean)",desc:"14 lines: three quatrains + a couplet. Iambic pentameter.",meter:{type:"stress",foot:"iambic",feet:5},extensible:false,lines:[{id:"Q1L1",label:"quatrain 1, line 1",rhyme:"A",syl:10},{id:"Q1L2",label:"quatrain 1, line 2",rhyme:"B",syl:10},{id:"Q1L3",label:"quatrain 1, line 3",rhyme:"A",syl:10},{id:"Q1L4",label:"quatrain 1, line 4",rhyme:"B",syl:10},{id:"Q2L1",label:"quatrain 2, line 1",rhyme:"C",syl:10},{id:"Q2L2",label:"quatrain 2, line 2",rhyme:"D",syl:10},{id:"Q2L3",label:"quatrain 2, line 3",rhyme:"C",syl:10},{id:"Q2L4",label:"quatrain 2, line 4",rhyme:"D",syl:10},{id:"Q3L1",label:"quatrain 3, line 1",rhyme:"E",syl:10},{id:"Q3L2",label:"quatrain 3, line 2",rhyme:"F",syl:10},{id:"Q3L3",label:"quatrain 3, line 3",rhyme:"E",syl:10},{id:"Q3L4",label:"quatrain 3, line 4",rhyme:"F",syl:10},{id:"CL1",label:"couplet, line 1",rhyme:"G",syl:10},{id:"CL2",label:"couplet, line 2",rhyme:"G",syl:10}]},
+  {cat:"Rhyming",name:"Sonnet (Petrarchan)",desc:"Octave (ABBAABBA) + sestet (CDECDE). Volta separates them.",meter:{type:"stress",foot:"iambic",feet:5},extensible:false,lines:[{id:"O1",label:"octave 1",rhyme:"A",syl:10},{id:"O2",label:"octave 2",rhyme:"B",syl:10},{id:"O3",label:"octave 3",rhyme:"B",syl:10},{id:"O4",label:"octave 4",rhyme:"A",syl:10},{id:"O5",label:"octave 5",rhyme:"A",syl:10},{id:"O6",label:"octave 6",rhyme:"B",syl:10},{id:"O7",label:"octave 7",rhyme:"B",syl:10},{id:"O8",label:"octave 8",rhyme:"A",syl:10},{id:"S1",label:"sestet 1",rhyme:"C",syl:10},{id:"S2",label:"sestet 2",rhyme:"D",syl:10},{id:"S3",label:"sestet 3",rhyme:"E",syl:10},{id:"S4",label:"sestet 4",rhyme:"C",syl:10},{id:"S5",label:"sestet 5",rhyme:"D",syl:10},{id:"S6",label:"sestet 6",rhyme:"E",syl:10}]},
+  {cat:"Rhyming",name:"Limerick",desc:"Five lines, AABBA. Bouncy anapestic rhythm.",meter:{type:"syllable",counts:[8,8,5,5,8]},extensible:false,lines:[{id:"L1",label:"line 1",rhyme:"A",syl:8},{id:"L2",label:"line 2",rhyme:"A",syl:8},{id:"L3",label:"line 3",rhyme:"B",syl:5},{id:"L4",label:"line 4",rhyme:"B",syl:5},{id:"L5",label:"line 5",rhyme:"A",syl:8}]},
+  {cat:"Rhyming",name:"Ballad stanza",desc:"Alternating 4-3 beat lines (ABCB). Add stanzas freely.",meter:{type:"syllable",counts:[8,6,8,6]},extensible:true,unitLabel:"stanza",minUnits:1,extendFn:balladUnit,units:2,hasClosing:false},
+  {cat:"Rhyming",name:"Heroic couplets",desc:"Rhyming pairs in iambic pentameter. Add couplets freely.",meter:{type:"stress",foot:"iambic",feet:5},extensible:true,unitLabel:"couplet",minUnits:2,extendFn:heroicUnit,units:4,hasClosing:false},
+  {cat:"Rhyming",name:"Terza rima",desc:"Interlocking ABA BCB tercets. Traditionally closed with a couplet.",meter:{type:"stress",foot:"iambic",feet:5},extensible:true,unitLabel:"tercet",minUnits:2,extendFn:terzaUnit,units:3,hasClosing:true,closingFn:"terza"},
+  {cat:"Rhyming",name:"Ottava rima",desc:"Eight-line stanzas, ABABABCC.",meter:{type:"stress",foot:"iambic",feet:5},extensible:true,unitLabel:"stanza",minUnits:1,extendFn:ottavaUnit,units:1,hasClosing:false},
+  {cat:"Rhyming",name:"Spenserian stanza",desc:"Nine-line stanzas ABABBCBCC, closing with an alexandrine.",meter:{type:"stress",foot:"iambic",feet:5},extensible:true,unitLabel:"stanza",minUnits:1,extendFn:spensUnit,units:1,hasClosing:false},
+  {cat:"Repetition forms",name:"Villanelle",desc:"19 lines: five tercets + a quatrain. Two refrains alternate throughout.",meter:{type:"stress",foot:"iambic",feet:5},extensible:false,lines:[{id:"R1",label:"refrain 1",rhyme:"A1",syl:10},{id:"T1L2",label:"tercet 1, line 2",rhyme:"b",syl:10},{id:"R2",label:"refrain 2",rhyme:"A2",syl:10},{id:"T2L1",label:"tercet 2, line 1",rhyme:"a",syl:10},{id:"T2L2",label:"tercet 2, line 2",rhyme:"b",syl:10},{id:"R1a",label:"refrain 1 (repeat)",rhyme:"A1",syl:10,repeats:"R1"},{id:"T3L1",label:"tercet 3, line 1",rhyme:"a",syl:10},{id:"T3L2",label:"tercet 3, line 2",rhyme:"b",syl:10},{id:"R2a",label:"refrain 2 (repeat)",rhyme:"A2",syl:10,repeats:"R2"},{id:"T4L1",label:"tercet 4, line 1",rhyme:"a",syl:10},{id:"T4L2",label:"tercet 4, line 2",rhyme:"b",syl:10},{id:"R1b",label:"refrain 1 (repeat)",rhyme:"A1",syl:10,repeats:"R1"},{id:"T5L1",label:"tercet 5, line 1",rhyme:"a",syl:10},{id:"T5L2",label:"tercet 5, line 2",rhyme:"b",syl:10},{id:"R2b",label:"refrain 2 (repeat)",rhyme:"A2",syl:10,repeats:"R2"},{id:"Q1",label:"quatrain, line 1",rhyme:"a",syl:10},{id:"Q2",label:"quatrain, line 2",rhyme:"b",syl:10},{id:"R1c",label:"refrain 1 (repeat)",rhyme:"A1",syl:10,repeats:"R1"},{id:"R2c",label:"refrain 2 (repeat)",rhyme:"A2",syl:10,repeats:"R2"}]},
+  {cat:"Repetition forms",name:"Pantoum",desc:"Interlocking quatrains. Lines 2 & 4 become lines 1 & 3 of the next stanza.",meter:{type:"free"},extensible:true,unitLabel:"stanza",minUnits:2,extendFn:pantoumUnit,units:2,hasClosing:true,closingFn:"pantoum"},
+  {cat:"Repetition forms",name:"Triolet",desc:"Eight-line form with strict repeats.",meter:{type:"stress",foot:"iambic",feet:4},extensible:false,lines:[{id:"R1",label:"line 1 (refrain A)",rhyme:"A",syl:8},{id:"R2",label:"line 2 (refrain B)",rhyme:"B",syl:8},{id:"L3",label:"line 3",rhyme:"a",syl:8},{id:"R1a",label:"line 4 (repeat of line 1)",rhyme:"A",syl:8,repeats:"R1"},{id:"L5",label:"line 5",rhyme:"a",syl:8},{id:"L6",label:"line 6",rhyme:"b",syl:8},{id:"R1b",label:"line 7 (repeat of line 1)",rhyme:"A",syl:8,repeats:"R1"},{id:"R2b",label:"line 8 (repeat of line 2)",rhyme:"B",syl:8,repeats:"R2"}]},
+  {cat:"Repetition forms",name:"Rondeau",desc:"15-line French form with a rentrement refrain.",meter:{type:"stress",foot:"iambic",feet:8},extensible:false,lines:[{id:"L1",label:"line 1",rhyme:"A",syl:8},{id:"L2",label:"line 2",rhyme:"A",syl:8},{id:"L3",label:"line 3",rhyme:"B",syl:8},{id:"L4",label:"line 4",rhyme:"B",syl:8},{id:"L5",label:"line 5",rhyme:"A",syl:8},{id:"L6",label:"line 6",rhyme:"A",syl:8},{id:"L7",label:"line 7",rhyme:"A",syl:8},{id:"L8",label:"line 8",rhyme:"B",syl:8},{id:"Ref1",label:"rentrement (opening phrase as refrain)",rhyme:"R"},{id:"L9",label:"line 9",rhyme:"A",syl:8},{id:"L10",label:"line 10",rhyme:"A",syl:8},{id:"L11",label:"line 11",rhyme:"B",syl:8},{id:"L12",label:"line 12",rhyme:"B",syl:8},{id:"L13",label:"line 13",rhyme:"A",syl:8},{id:"Ref2",label:"rentrement (repeat)",rhyme:"R",repeats:"Ref1"}]},
+  {cat:"Eastern forms",name:"Ghazal",desc:"Couplets sharing an end-word. Poet signs in the final maqta couplet.",meter:{type:"free"},extensible:true,unitLabel:"couplet",minUnits:2,extendFn:ghazalUnit,units:3,hasClosing:true,closingFn:"ghazal"},
+  {cat:"Eastern forms",name:"Renga (opening)",desc:"Japanese linked verse — hokku and wakiku opening.",meter:{type:"syllable",counts:[5,7,5,7,7]},extensible:false,lines:[{id:"H1",label:"hokku, line 1",syl:5},{id:"H2",label:"hokku, line 2",syl:7},{id:"H3",label:"hokku, line 3",syl:5},{id:"W1",label:"wakiku, line 1",syl:7},{id:"W2",label:"wakiku, line 2",syl:7}]},
+  {cat:"Ode forms",name:"Pindaric ode",desc:"Three-part Greek ode: strophe, antistrophe, epode.",meter:{type:"free"},extensible:false,lines:[{id:"ST1",label:"strophe, line 1"},{id:"ST2",label:"strophe, line 2"},{id:"ST3",label:"strophe, line 3"},{id:"ST4",label:"strophe, line 4"},{id:"AN1",label:"antistrophe, line 1"},{id:"AN2",label:"antistrophe, line 2"},{id:"AN3",label:"antistrophe, line 3"},{id:"AN4",label:"antistrophe, line 4"},{id:"EP1",label:"epode, line 1"},{id:"EP2",label:"epode, line 2"},{id:"EP3",label:"epode, line 3"}]},
+  {cat:"Ode forms",name:"Horatian ode",desc:"Regular ABAB stanzas. Calm and reflective.",meter:{type:"free"},extensible:true,unitLabel:"stanza",minUnits:2,extendFn:horatianUnit,units:3,hasClosing:false},
+  {cat:"Elegiac",name:"Elegiac couplet",desc:"Classical alternating hexameter and pentameter lines.",meter:{type:"syllable"},extensible:true,unitLabel:"couplet",minUnits:2,extendFn:elegyCoupletUnit,units:3,hasClosing:false},
+  {cat:"Elegiac",name:"Elegy (free verse)",desc:"A mourning poem in free verse, meditating on loss.",meter:{type:"free"},extensible:false,lines:[{id:"L1",label:"opening — the loss"},{id:"L2",label:"line 2"},{id:"L3",label:"line 3"},{id:"L4",label:"middle — remembrance"},{id:"L5",label:"line 5"},{id:"L6",label:"line 6"},{id:"L7",label:"closing — acceptance or question"}]},
+  {cat:"Elegiac",name:"Epitaph",desc:"Short rhyming memorial verse.",meter:{type:"syllable",counts:[8,8,8,8]},extensible:false,lines:[{id:"L1",label:"line 1",rhyme:"A",syl:8},{id:"L2",label:"line 2",rhyme:"A",syl:8},{id:"L3",label:"line 3",rhyme:"B",syl:8},{id:"L4",label:"line 4",rhyme:"B",syl:8}]},
+  {cat:"Acrostic & visual",name:"Acrostic",desc:"First letters of each line spell a word.",meter:{type:"free"},extensible:false,lines:[{id:"A1",label:"line 1"},{id:"A2",label:"line 2"},{id:"A3",label:"line 3"},{id:"A4",label:"line 4"},{id:"A5",label:"line 5"}]},
+  {cat:"Free verse",name:"Free verse",desc:"No fixed rhyme or meter.",meter:{type:"free"},extensible:false,lines:[{id:"L1",label:"line 1"},{id:"L2",label:"line 2"},{id:"L3",label:"line 3"},{id:"L4",label:"line 4"},{id:"L5",label:"line 5"},{id:"L6",label:"line 6"},{id:"L7",label:"line 7"},{id:"L8",label:"line 8"}]},
+  {cat:"Free verse",name:"Prose poem",desc:"Poetic density in paragraph form.",meter:{type:"free"},extensible:false,lines:[{id:"P1",label:"paragraph 1"},{id:"P2",label:"paragraph 2"},{id:"P3",label:"paragraph 3"}]},
+  {cat:"Custom",name:"Custom form",desc:"Design your own form below.",meter:{type:"free"},custom:true,extensible:false,lines:[]},
+];
+
+let currentForm=null,currentUnits=0,currentLines=[],lineValues={},meterMode="syllable";
+let closingActive=false,closingLines=[],closingLabel="",maqtaActive=false;
+
+// ── syllable/rhyme helpers ────────────────────────────────────────────────────
+function countSyl(word){word=word.toLowerCase().replace(/[^a-z]/g,"");if(!word)return 0;word=word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/,"").replace(/^y/,"");const m=word.match(/[aeiouy]{1,2}/g);return m?m.length:1;}
+function lineSyl(text){return text.trim().split(/\s+/).filter(Boolean).reduce((s,w)=>s+countSyl(w),0);}
+function getRhymeSound(text){const words=text.trim().split(/\s+/).filter(Boolean);if(!words.length)return null;const last=words[words.length-1].toLowerCase().replace(/[^a-z]/g,"");if(!last)return null;const vi=last.search(/[aeiou]/);return vi===-1?last.slice(-2):last.slice(vi);}
+function slantMatch(a,b){if(!a||!b)return false;if(a===b)return true;if(a.slice(-2)===b.slice(-2))return true;const aC=a.replace(/[aeiou]/g,""),bC=b.replace(/[aeiou]/g,"");return aC===bC&&aC.length>0;}
+
+// ── reference library ─────────────────────────────────────────────────────────
+function openRef(){
+  buildRefBody("");
+  document.getElementById("refSearch").value="";
+  document.getElementById("refDialog").classList.add("open");
+  setTimeout(()=>document.getElementById("refSearch").focus(),50);
+}
+function closeRef(){document.getElementById("refDialog").classList.remove("open");}
+function filterRef(q){buildRefBody(q.toLowerCase().trim());}
+
+function buildRefBody(q){
+  const body=document.getElementById("refBody");body.innerHTML="";
+  const cats={};
+  REF_DATA.forEach(r=>{
+    if(q&&!r.name.toLowerCase().includes(q)&&!r.cat.toLowerCase().includes(q)&&!r.what.toLowerCase().includes(q)&&!r.history.toLowerCase().includes(q)&&!r.use.toLowerCase().includes(q))return;
+    if(!cats[r.cat])cats[r.cat]=[];cats[r.cat].push(r);
+  });
+  if(!Object.keys(cats).length){body.innerHTML='<div class="ref-no-results">No forms match your search.</div>';return;}
+  Object.entries(cats).forEach(([cat,entries])=>{
+    const catH=document.createElement("div");catH.className="ref-cat-header";catH.textContent=cat;body.appendChild(catH);
+    entries.forEach(r=>{
+      const entry=document.createElement("div");entry.className="ref-entry";
+      const hdr=document.createElement("div");hdr.className="ref-entry-header";
+      hdr.innerHTML=`<span class="ref-entry-name">${r.name}</span><span class="ref-entry-cat">${r.cat}</span><span class="ref-chevron">▶</span>`;
+      hdr.addEventListener("click",()=>{
+        const wasOpen=entry.classList.contains("open");
+        entry.classList.toggle("open",!wasOpen);
+      });
+      const entryBody=document.createElement("div");entryBody.className="ref-entry-body";
+      entryBody.innerHTML=`
+        <div class="ref-section"><div class="ref-section-label">What it is</div>${r.what}</div>
+        <div class="ref-section"><div class="ref-section-label">History</div>${r.history}</div>
+        <div class="ref-section"><div class="ref-section-label">Best used for</div>${r.use}</div>`;
+      // "use this form" button if it exists in FORMS
+      const formMatch=FORMS.find(f=>f.name===r.name);
+      if(formMatch){
+        const useBtn=document.createElement("button");useBtn.className="ref-use-btn";useBtn.textContent=`→ switch to ${r.name}`;
+        useBtn.addEventListener("click",()=>{
+          closeRef();
+          const sel=document.getElementById("formSelect");sel.value=r.name;
+          loadForm(formMatch);
+        });
+        entryBody.appendChild(useBtn);
+      }
+      entry.appendChild(hdr);entry.appendChild(entryBody);body.appendChild(entry);
+      // auto-expand if search query matches
+      if(q)entry.classList.add("open");
+    });
+  });
+}
+
+// ── form loading ──────────────────────────────────────────────────────────────
+function buildSelectEl(){
+  const sel=document.getElementById("formSelect");
+  const cats={};FORMS.forEach(f=>{if(!cats[f.cat])cats[f.cat]=[];cats[f.cat].push(f);});
+  Object.entries(cats).forEach(([cat,forms])=>{
+    const og=document.createElement("optgroup");og.label=cat;
+    forms.forEach(f=>{const o=document.createElement("option");o.value=f.name;o.textContent=f.name+(f.extensible?" ↕":"");og.appendChild(o);});
+    sel.appendChild(og);
+  });
+  sel.addEventListener("change",()=>loadForm(FORMS.find(f=>f.name===sel.value)));
+  const c=document.getElementById("cpSchemePresets");
+  SCHEME_PRESETS.forEach(s=>{const b=document.createElement("button");b.textContent=s;b.addEventListener("click",()=>{document.getElementById("cpSchemeCustom").value=s;c.querySelectorAll("button").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");});c.appendChild(b);});
+  document.getElementById("cpFoot").addEventListener("change",()=>{document.getElementById("cpFeetRow").style.display=document.getElementById("cpFoot").value==="none"?"none":"flex";});
+}
+
+function loadForm(f){
+  currentForm=f;lineValues={};closingActive=false;closingLines=[];closingLabel="";maqtaActive=false;
+  document.getElementById("customPanel").classList.toggle("visible",!!f.custom);
+  document.getElementById("formSelect").value=f.name;
+  if(f.extensible){currentUnits=f.units||2;rebuildExtensibleLines();}
+  else{currentLines=f.lines?[...f.lines]:[];buildTemplate();}
+  buildSidebar();
+  if(f.custom)document.getElementById("templateArea").innerHTML='<div style="font-size:13px;color:var(--color-text-secondary);padding:.5rem 0">configure your form in the sidebar, then click <strong>apply & build template</strong>.</div>';
+}
+function rebuildExtensibleLines(){currentLines=[];for(let i=0;i<currentUnits;i++)currentLines.push(...currentForm.extendFn(i));buildTemplate();buildSidebar();}
+function addUnit(){if(!currentForm.extensible||closingActive||maqtaActive)return;currentLines.push(...currentForm.extendFn(currentUnits));currentUnits++;buildTemplate();buildSidebar();}
+function removeUnit(){if(!currentForm.extensible||closingActive||maqtaActive)return;if(currentUnits<=currentForm.minUnits)return;const rem=new Set(currentForm.extendFn(currentUnits-1).map(l=>l.id));rem.forEach(id=>delete lineValues[id]);currentLines=currentLines.filter(l=>!rem.has(l.id));currentUnits--;buildTemplate();buildSidebar();}
+
+// ── closing stanza ────────────────────────────────────────────────────────────
+function triggerClose(){if(!currentForm.hasClosing)return;if(currentForm.closingFn==="pantoum")document.getElementById("pantoumDialog").classList.add("open");else if(currentForm.closingFn==="terza")applyTerzaClose();else if(currentForm.closingFn==="ghazal")applyGhazalClose();}
+function closePantoumDialog(){document.getElementById("pantoumDialog").classList.remove("open");}
+function applyPantoumClose(variant){
+  closePantoumDialog();
+  closingLines=variant==="circular"?[
+    {id:"cls_l1",label:"closing, line 1 (= stanza 1, line 2)",repeats:"s1l2"},
+    {id:"cls_l2",label:"closing, line 2 (= stanza 1, line 3)",repeats:"s1l3"},
+    {id:"cls_l3",label:"closing, line 3 (= stanza 1, line 4)",repeats:"s1l4"},
+    {id:"cls_l4",label:"closing, line 4 (= stanza 1, line 1 — the poem's first line)",repeats:"s1l1"},
+  ]:[
+    {id:"cls_l1",label:"closing, line 1 (= stanza 1, line 2)",repeats:"s1l2"},
+    {id:"cls_l2",label:"closing, line 2 (= stanza 1, line 3)",repeats:"s1l3"},
+    {id:"cls_l3",label:"closing, line 3 (= stanza 1, line 4)",repeats:"s1l4"},
+    {id:"cls_l4",label:"closing, line 4 (= stanza 1, line 1)",repeats:"s1l1"},
+  ];
+  closingLabel=variant==="circular"?"closing stanza — circular (Option A)":"closing stanza — reversed (Option B)";
+  closingActive=true;buildTemplate();buildSidebar();
+}
+function applyTerzaClose(){
+  const L=["A","B","C","D","E","F","G","H"],rb=L[currentUnits%L.length];
+  closingLines=[{id:"tz_cls_l1",label:"closing couplet, line 1",rhyme:rb,syl:10},{id:"tz_cls_l2",label:"closing couplet, line 2",rhyme:rb,syl:10}];
+  closingLabel="closing couplet";closingActive=true;buildTemplate();buildSidebar();
+}
+function applyGhazalClose(){maqtaActive=true;closingActive=true;closingLabel="maqta (signature couplet)";closingLines=[];buildTemplate();buildSidebar();}
+function removeClosing(){closingActive=false;closingLines.forEach(l=>delete lineValues[l.id]);closingLines=[];closingLabel="";maqtaActive=false;buildTemplate();buildSidebar();}
+
+// ── sidebar ───────────────────────────────────────────────────────────────────
+function buildSidebar(){
+  document.getElementById("formInfo").textContent=currentForm.desc;
+  const m=currentForm.meter,mp=document.getElementById("meterPanel"),md=document.getElementById("meterDesc");
+  if(!m||m.type==="free"){mp.style.display="none";}
+  else{mp.style.display="block";if(m.type==="syllable")md.textContent=`Syllabic${m.counts?" ("+m.counts.join("-")+" syl)":""}`;else if(m.type==="stress")md.textContent=`${m.foot} ${FEET_NAME[m.feet]||m.feet+" feet"}`;document.getElementById("meterModeDesc").textContent=meterMode==="syllable"?"Counts syllables per line.":"Shows stress pattern (S=stressed, u=unstressed).";}
+  const all=[...currentLines,...closingLines];
+  const unique=[...new Set(all.map(l=>l.rhyme).filter(Boolean))];
+  const sd=document.getElementById("schemeDisplay");
+  if(!unique.length){sd.innerHTML="";return;}
+  let html=`<div class="sb-h" style="margin-top:8px">rhyme scheme</div>`;
+  unique.forEach(r=>{const col=rc(r);html+=`<div class="scheme-row"><div class="scheme-badge" style="background:${col[0]};color:${col[1]}">${r}</div><span>group ${r}</span></div>`;});
+  sd.innerHTML=html;
+}
+
+// ── template ──────────────────────────────────────────────────────────────────
+function buildTemplate(){
+  const area=document.getElementById("templateArea");area.innerHTML="";
+  let lastSec="";
+  currentLines.forEach((line,idx)=>{
+    const parts=line.label.split(","),sec=parts.length>1?parts[0].trim():"";
+    if(sec&&sec!==lastSec&&currentLines.length>4){const sh=document.createElement("div");sh.className="sec-header";sh.textContent=sec;area.appendChild(sh);lastSec=sec;}
+    area.appendChild(makeLineGroup(line,idx));
+  });
+  if(maqtaActive&&currentLines.length>=2){const note=document.createElement("div");note.className="maqta-note";note.textContent="✦ maqta — the couplet above is your signature stanza. Include your name or poet persona in it.";area.appendChild(note);}
+  if(closingActive&&closingLines.length>0){const ch=document.createElement("div");ch.className="closing-header";ch.innerHTML=`<span>${closingLabel}</span><span class="closing-badge">closing</span>`;area.appendChild(ch);closingLines.forEach((line,idx)=>area.appendChild(makeLineGroup(line,currentLines.length+idx)));}
+  if(currentForm.extensible){
+    const bar=document.createElement("div");bar.className="extend-bar";
+    const ul=currentForm.unitLabel||"unit";
+    const lbl=document.createElement("span");lbl.className="extend-bar-label";lbl.textContent=`${currentUnits} ${ul}${currentUnits!==1?"s":""}${closingActive?" + closing":""}`;bar.appendChild(lbl);
+    const addBtn=document.createElement("button");addBtn.className="ebtn";addBtn.textContent=`+ ${ul}`;addBtn.disabled=closingActive||maqtaActive;addBtn.onclick=addUnit;bar.appendChild(addBtn);
+    const remBtn=document.createElement("button");remBtn.className="ebtn";remBtn.textContent=`− ${ul}`;remBtn.disabled=closingActive||maqtaActive||currentUnits<=currentForm.minUnits;remBtn.onclick=removeUnit;bar.appendChild(remBtn);
+    if(currentForm.hasClosing){
+      if(!closingActive&&!maqtaActive){const clsBtn=document.createElement("button");clsBtn.className="ebtn close-btn";clsBtn.textContent="⊕ close poem";clsBtn.onclick=triggerClose;bar.appendChild(clsBtn);}
+      else{const unclsBtn=document.createElement("button");unclsBtn.className="ebtn unclose-btn";unclsBtn.textContent="✕ remove closing";unclsBtn.onclick=removeClosing;bar.appendChild(unclsBtn);}
+    }
+    area.appendChild(bar);
+  }
+  checkAllRhymes();
+}
+
+function makeLineGroup(line,idx){
+  const isRep=!!line.repeats,col=line.rhyme?rc(line.rhyme):null;
+  const grp=document.createElement("div");grp.className="line-group";
+  let lbl=`<div class="line-label">${line.label}`;
+  if(col&&line.rhyme)lbl+=` <span class="rhyme-tag" style="background:${col[0]};color:${col[1]}">${line.rhyme}</span>`;
+  if(line.syl)lbl+=` <span style="font-size:10px;color:var(--color-text-tertiary)">(~${line.syl} syl)</span>`;
+  if(isRep)lbl+=` <span style="font-size:10px;color:var(--color-text-tertiary)">↺ auto-fills</span>`;
+  lbl+="</div>";grp.innerHTML=lbl;
+  const ta=document.createElement("textarea");
+  ta.className="line-input"+(isRep?" repeated":"");ta.rows=1;ta.id="line_"+line.id;
+  ta.placeholder=isRep?"(repeats from "+line.repeats+")":line.label+"…";ta.readOnly=isRep;
+  if(isRep){ta.value=lineValues[line.repeats]||"";}else{ta.value=lineValues[line.id]||"";}
+  if(!isRep){ta.addEventListener("input",()=>{lineValues[line.id]=ta.value;ta.style.height="32px";ta.style.height=ta.scrollHeight+"px";propagateRepeats(line.id,ta.value);checkLine(ta,line,idx);checkAllRhymes();});}
+  grp.appendChild(ta);
+  if(currentForm.meter&&currentForm.meter.type==="stress"&&currentForm.meter.foot&&currentForm.meter.foot!=="none"&&!isRep){const hint=document.createElement("div");hint.className="meter-hint";hint.textContent="pattern: "+(FOOT_PAT[currentForm.meter.foot]||"").repeat(currentForm.meter.feet||5)+" (S=stressed u=unstressed)";grp.appendChild(hint);}
+  const fb=document.createElement("div");fb.className="line-fb";fb.id="fb_"+line.id;grp.appendChild(fb);
+  return grp;
+}
+
+function propagateRepeats(srcId,val){[...currentLines,...closingLines].forEach(l=>{if(l.repeats===srcId){const el=document.getElementById("line_"+l.id);if(el){el.value=val;lineValues[l.id]=val;}}});}
+
+function checkLine(ta,line,idx){
+  const togMeter=document.getElementById("togMeter").checked,fb=document.getElementById("fb_"+line.id),val=ta.value.trim();
+  if(!val){ta.className="line-input"+(line.repeats?" repeated":"");fb.textContent="";fb.className="line-fb";return;}
+  const m=currentForm.meter;
+  if(!togMeter||!m||m.type==="free"||line.syl===null||line.syl===undefined){ta.className="line-input ok"+(line.repeats?" repeated":"");fb.textContent="";fb.className="line-fb ok";return;}
+  const syl=lineSyl(val);
+  if(meterMode==="syllable"){
+    const target=line.syl||(m.counts?m.counts[idx%m.counts.length]:null);
+    if(!target){ta.className="line-input ok"+(line.repeats?" repeated":"");fb.textContent="";return;}
+    const diff=syl-target;
+    if(diff===0){ta.className="line-input ok"+(line.repeats?" repeated":"");fb.textContent=`✓ ${syl} syl`;fb.className="line-fb ok";}
+    else if(Math.abs(diff)<=1){ta.className="line-input warn"+(line.repeats?" repeated":"");fb.textContent=`${syl} syl (target ~${target})`;fb.className="line-fb warn";}
+    else{ta.className="line-input error"+(line.repeats?" repeated":"");fb.textContent=`${syl} syl — target ${target} (${diff>0?"too many":"too few"})`;fb.className="line-fb error";}
+  }else{
+    const pat=val.trim().split(/\s+/).filter(Boolean).map(w=>{const s=countSyl(w);if(s===1)return"x";let p="";for(let i=0;i<s;i++)p+=(i%2===0)?"S":"u";return p;}).join("");
+    fb.textContent=`stress: ${pat} (${syl} syl)`;fb.className="line-fb ok";ta.className="line-input ok"+(line.repeats?" repeated":"");
+  }
+}
+
+function checkAllRhymes(){
+  const togRhyme=document.getElementById("togRhyme").checked,useSlant=document.getElementById("togSlant").checked;
+  if(!togRhyme)return;
+  const all=[...currentLines,...closingLines],groups={};
+  all.forEach(l=>{if(!l.rhyme)return;const k=l.rhyme.toUpperCase().replace(/\d/,"");if(!groups[k])groups[k]=[];const el=document.getElementById("line_"+l.id);if(el&&el.value.trim())groups[k].push({id:l.id,sound:getRhymeSound(el.value)});});
+  Object.values(groups).forEach(grp=>{if(grp.length<2)return;grp.forEach((g,i)=>{const el=document.getElementById("line_"+g.id),fb=document.getElementById("fb_"+g.id);if(!el||!el.value.trim())return;const others=grp.filter((_,j)=>j!==i).map(x=>x.sound);if(others.every(s=>s===null))return;const matches=others.some(s=>useSlant?slantMatch(g.sound,s):(g.sound===s));if(!matches&&fb){const prev=fb.textContent;fb.textContent=prev?prev+" · rhyme mismatch":"rhyme mismatch";fb.className="line-fb error";}});});
+}
+
+function setMeterMode(mode){meterMode=mode;document.getElementById("btnSyl").classList.toggle("active",mode==="syllable");document.getElementById("btnStress").classList.toggle("active",mode==="stress");document.getElementById("meterModeDesc").textContent=mode==="syllable"?"Counts syllables per line.":"Shows stress pattern (S=stressed, u=unstressed).";currentLines.forEach((l,i)=>{const el=document.getElementById("line_"+l.id);if(el)checkLine(el,l,i);});}
+
+function applyCustomForm(){
+  const nLines=Math.max(1,Math.min(60,parseInt(document.getElementById("cpLines").value)||8));
+  const schemeRaw=(document.getElementById("cpSchemeCustom").value||"").toUpperCase().trim();
+  const foot=document.getElementById("cpFoot").value,feet=parseInt(document.getElementById("cpFeet").value)||5;
+  const schemeLetters=schemeRaw?schemeRaw.replace(/[^A-Z]/g,"").split(""):[];
+  const targetSyl=foot!=="none"?(FOOT_SYL[foot]||0)*feet:null;
+  currentLines=[];
+  for(let i=0;i<nLines;i++){const letter=schemeLetters.length?schemeLetters[i%schemeLetters.length]:null;currentLines.push({id:"CL"+(i+1),label:"line "+(i+1),rhyme:letter||null,syl:targetSyl});}
+  currentForm={...currentForm,desc:`Custom: ${nLines} lines${schemeRaw?" · "+schemeRaw+" rhyme":""}${foot!=="none"?" · "+foot+" "+FEET_NAME[feet]:""}`,meter:foot==="none"?{type:"free"}:{type:"stress",foot,feet}};
+  lineValues={};buildTemplate();buildSidebar();
+}
+
+function clearPoem(){lineValues={};closingActive=false;closingLines=[];closingLabel="";maqtaActive=false;if(currentForm.extensible)rebuildExtensibleLines();else{currentLines=currentForm.lines?[...currentForm.lines]:[];buildTemplate();}document.getElementById("outputArea").style.display="none";}
+function showPoem(){const all=[...currentLines,...closingLines];const lines=all.map(l=>{const el=document.getElementById("line_"+l.id);return el?el.value:"";});const title=document.getElementById("poemTitle").value||"untitled";const out=document.getElementById("outputArea");out.style.display="block";out.textContent=title+"\n\n"+lines.join("\n");}
+function copyPoem(){showPoem();navigator.clipboard.writeText(document.getElementById("outputArea").textContent).catch(()=>{});}
+
+document.getElementById("togRhyme").addEventListener("change",checkAllRhymes);
+document.getElementById("togSlant").addEventListener("change",checkAllRhymes);
+document.getElementById("togMeter").addEventListener("change",()=>{currentLines.forEach((l,i)=>{const el=document.getElementById("line_"+l.id);if(el)checkLine(el,l,i);});});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.getElementById("pantoumDialog").classList.remove("open");document.getElementById("refDialog").classList.remove("open");}});
+
+buildSelectEl();
+loadForm(FORMS[0]);
+</script>
+</body>
+</html>
