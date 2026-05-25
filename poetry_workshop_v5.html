@@ -15,7 +15,7 @@ select,input,textarea,button{font-family:var(--font-sans)}
 .tog{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--color-text-secondary);cursor:pointer}
 .tog input{width:13px;height:13px;cursor:pointer}
 .main{display:flex;flex:1;overflow:hidden}
-.sidebar{width:200px;flex-shrink:0;border-right:.5px solid var(--color-border-tertiary);padding:.75rem;overflow-y:auto;display:flex;flex-direction:column;gap:0}
+.sidebar{width:200px;flex-shrink:0;border-right:.5px solid var(--color-border-tertiary);padding:.75rem;overflow-y:auto;display:flex;flex-direction:column}
 .sb-h{font-size:10px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
 .form-info{font-size:11px;color:var(--color-text-secondary);line-height:1.5;margin-bottom:10px}
 .scheme-badge{display:inline-flex;width:18px;height:18px;border-radius:3px;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0}
@@ -33,7 +33,7 @@ select,input,textarea,button{font-family:var(--font-sans)}
 .cp-schemes button.sel{background:#dbeafe;color:#1e40af;border-color:#1e40af}
 .cp-apply{width:100%;font-size:12px;padding:4px;margin-top:3px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;font-weight:500}
 .cp-apply:hover{background:var(--color-background-secondary)}
-.ref-btn{margin-top:auto;padding-top:12px;width:100%;font-size:12px;padding:6px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .15s}
+.ref-btn{width:100%;font-size:12px;padding:6px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:center;gap:6px;margin-top:16px}
 .ref-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
 .workspace{flex:1;padding:.75rem 1rem;overflow-y:auto}
 .poem-title-input{width:100%;font-size:15px;font-weight:500;border:none;border-bottom:.5px solid var(--color-border-tertiary);padding:3px 0;margin-bottom:.75rem;background:transparent;color:var(--color-text-primary)}
@@ -42,12 +42,16 @@ select,input,textarea,button{font-family:var(--font-sans)}
 .line-group{margin-bottom:.5rem}
 .line-label{font-size:11px;color:var(--color-text-tertiary);margin-bottom:1px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .rhyme-tag{font-size:10px;padding:1px 5px;border-radius:3px;font-weight:500}
-.line-input{width:100%;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:5px 8px;font-size:14px;line-height:1.5;background:var(--color-background-primary);color:var(--color-text-primary);resize:none;overflow:hidden;min-height:32px;height:32px}
+.line-input{width:100%;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:5px 8px;font-size:14px;line-height:1.5;background:var(--color-background-primary);color:var(--color-text-primary);resize:none;overflow:hidden;min-height:32px;height:32px;transition:border-color .2s}
 .line-input:focus{outline:none;border-color:var(--color-border-primary)}
 .line-input.repeated{background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:not-allowed}
 .line-input.ok{border-color:#1D9E75}.line-input.warn{border-color:#BA7517}.line-input.error{border-color:#E24B4A}
+.line-input.analyzing{border-color:#7C9EDB;border-style:dashed}
 .line-fb{font-size:10px;margin-top:1px;min-height:12px}
-.line-fb.ok{color:#1D9E75}.line-fb.warn{color:#BA7517}.line-fb.error{color:#E24B4A}
+.line-fb.ok{color:#1D9E75}.line-fb.warn{color:#BA7517}.line-fb.error{color:#E24B4A}.line-fb.analyzing{color:#7C9EDB}
+.rhyme-hints{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.rhyme-chip{font-size:10px;padding:1px 7px;border-radius:3px;border:.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-serif);transition:background .15s}
+.rhyme-chip:hover{background:#dbeafe;color:#1e40af;border-color:#93c5fd}
 .sec-header{font-size:10px;font-weight:600;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin:.7rem 0 4px;padding-bottom:3px;border-bottom:.5px solid var(--color-border-tertiary)}
 .closing-header{font-size:10px;font-weight:600;color:#854F0B;text-transform:uppercase;letter-spacing:.05em;margin:.7rem 0 4px;padding-bottom:3px;border-bottom:.5px solid #FAEEDA;display:flex;align-items:center;gap:6px}
 .closing-badge{font-size:9px;padding:1px 6px;background:#FAEEDA;color:#854F0B;border-radius:3px;font-weight:600}
@@ -64,10 +68,16 @@ select,input,textarea,button{font-family:var(--font-sans)}
 .actions button{font-size:12px;padding:4px 11px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
 .actions button:hover{background:var(--color-background-secondary)}
 .output-area{margin-top:.75rem;padding:.75rem 1rem;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);white-space:pre-wrap;font-size:14px;line-height:1.9;color:var(--color-text-primary);display:none;font-family:var(--font-serif)}
-.meter-hint{font-size:10px;color:var(--color-text-tertiary);margin-top:1px;font-style:italic}
+.acrostic-letter{display:inline-flex;width:16px;height:16px;border-radius:3px;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-right:2px}
+.acrostic-letter.match{background:#E1F5EE;color:#0F6E56}
+.acrostic-letter.mismatch{background:#FCEBEB;color:#A32D2D}
+.acrostic-letter.empty{background:var(--color-background-secondary);color:var(--color-text-tertiary)}
+kbd{font-family:var(--font-mono,monospace);font-size:10px;padding:1px 5px;border:.5px solid var(--color-border-secondary);border-radius:3px;background:var(--color-background-primary);color:var(--color-text-secondary);white-space:nowrap}
 .maqta-note{font-size:11px;color:#854F0B;background:#FAEEDA;border-radius:var(--border-radius-md);padding:.4rem .6rem;margin-bottom:.4rem;line-height:1.5}
-
-/* ── dialogs ── */
+.engine-badge{font-size:10px;padding:2px 7px;border-radius:3px;border:.5px solid var(--color-border-secondary);color:var(--color-text-tertiary);display:flex;align-items:center;gap:4px}
+.engine-dot{width:6px;height:6px;border-radius:50%;background:#1D9E75}
+.engine-dot.loading{background:#7C9EDB;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .dialog-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:1000}
 .dialog-overlay.open{display:flex}
 .dialog{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1.25rem;max-width:440px;width:92%;box-shadow:0 8px 32px rgba(0,0,0,.18);max-height:90vh;display:flex;flex-direction:column}
@@ -80,8 +90,6 @@ select,input,textarea,button{font-family:var(--font-sans)}
 .dialog-opt span{font-size:11px;color:var(--color-text-secondary);line-height:1.5}
 .dialog-cancel{width:100%;font-size:12px;padding:5px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-secondary);cursor:pointer;flex-shrink:0}
 .dialog-cancel:hover{background:var(--color-background-secondary)}
-
-/* ── reference library dialog ── */
 .ref-dialog{max-width:600px;width:95%;max-height:88vh}
 .ref-dialog-body{flex:1;overflow-y:auto;margin-bottom:.75rem}
 .ref-search{width:100%;font-size:13px;padding:6px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);margin-bottom:.75rem;flex-shrink:0}
@@ -96,9 +104,9 @@ select,input,textarea,button{font-family:var(--font-sans)}
 .ref-entry.open .ref-chevron{transform:rotate(90deg)}
 .ref-entry-body{display:none;padding:.6rem .75rem;background:var(--color-background-secondary);border-top:.5px solid var(--color-border-tertiary);font-size:12px;color:var(--color-text-secondary);line-height:1.65}
 .ref-entry.open .ref-entry-body{display:block}
-.ref-entry-body .ref-section{margin-bottom:.5rem}
-.ref-entry-body .ref-section:last-child{margin-bottom:0}
-.ref-entry-body .ref-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:2px}
+.ref-section{margin-bottom:.5rem}
+.ref-section:last-child{margin-bottom:0}
+.ref-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:2px}
 .ref-use-btn{font-size:11px;padding:3px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;margin-top:.5rem}
 .ref-use-btn:hover{background:var(--color-background-secondary)}
 .ref-no-results{font-size:12px;color:var(--color-text-tertiary);padding:.75rem 0;text-align:center}
@@ -106,32 +114,50 @@ select,input,textarea,button{font-family:var(--font-sans)}
 </head>
 <body>
 
-<!-- Pantoum closing dialog -->
 <div class="dialog-overlay" id="pantoumDialog">
   <div class="dialog">
     <h3>Choose a pantoum closing</h3>
-    <p>A pantoum's final stanza uses lines from the <strong>first stanza</strong> to bring the poem full circle. There are two traditional arrangements:</p>
+    <p>A pantoum's final stanza uses lines from the <strong>first stanza</strong> to bring the poem full circle.</p>
     <div class="dialog-options">
       <button class="dialog-opt" onclick="applyPantoumClose('circular')">
         <strong>Option A — Circular closure</strong>
-        <span>Lines 2 &amp; 4 of the first stanza become lines 1 &amp; 3 of the final stanza. Lines 1 &amp; 3 of the first stanza become lines 2 &amp; 4. The very first line of your poem is also its very last — the poem ends where it began.</span>
+        <span>Lines 2 &amp; 4 become lines 1 &amp; 3; lines 1 &amp; 3 become lines 2 &amp; 4. The poem's first line is also its last.</span>
       </button>
       <button class="dialog-opt" onclick="applyPantoumClose('reversed')">
         <strong>Option B — Reversed closure</strong>
-        <span>Lines 2 &amp; 4 of the first stanza become lines 1 &amp; 3, and lines 3 &amp; 1 (reversed) become lines 2 &amp; 4. This creates a slightly different feeling of resolution — the poem circles back but lands differently.</span>
+        <span>Same lines but in reversed order — the poem circles back but lands differently.</span>
       </button>
     </div>
-    <button class="dialog-cancel" onclick="closePantoumDialog()">cancel</button>
+    <button class="dialog-cancel" onclick="document.getElementById('pantoumDialog').classList.remove('open')">cancel</button>
   </div>
 </div>
 
-<!-- Reference library dialog -->
 <div class="dialog-overlay" id="refDialog">
   <div class="dialog ref-dialog">
     <h3>📖 poetry form reference</h3>
     <input class="ref-search" id="refSearch" placeholder="search forms…" oninput="filterRef(this.value)">
     <div class="ref-dialog-body" id="refBody"></div>
-    <button class="dialog-cancel" onclick="closeRef()">close</button>
+    <button class="dialog-cancel" onclick="document.getElementById('refDialog').classList.remove('open')">close</button>
+  </div>
+</div>
+
+<div class="dialog-overlay" id="draftsDialog">
+  <div class="dialog" style="max-width:500px;width:95%">
+    <h3>📂 saved drafts</h3>
+    <div id="draftsListArea" style="flex:1;overflow-y:auto;margin-bottom:.75rem;max-height:60vh"></div>
+    <button class="dialog-cancel" onclick="document.getElementById('draftsDialog').classList.remove('open')">close</button>
+  </div>
+</div>
+
+<div class="dialog-overlay" id="saveNameDialog">
+  <div class="dialog" style="max-width:360px;width:95%">
+    <h3>💾 save draft</h3>
+    <p>Give this draft a name:</p>
+    <input id="saveNameInput" type="text" style="width:100%;font-size:13px;padding:6px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);margin-bottom:.75rem" placeholder="e.g. sonnet about autumn…" maxlength="80">
+    <div style="display:flex;gap:6px">
+      <button id="saveNameConfirm" style="flex:1;font-size:12px;padding:5px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);cursor:pointer;font-weight:500">save</button>
+      <button class="dialog-cancel" style="flex:1" onclick="document.getElementById('saveNameDialog').classList.remove('open')">cancel</button>
+    </div>
   </div>
 </div>
 
@@ -143,7 +169,12 @@ select,input,textarea,button{font-family:var(--font-sans)}
       <label class="tog"><input type="checkbox" id="togRhyme" checked> rhyme</label>
       <label class="tog"><input type="checkbox" id="togMeter" checked> meter</label>
       <label class="tog"><input type="checkbox" id="togSlant"> slant</label>
+      <label class="tog"><input type="checkbox" id="togHints"> hints</label>
     </div>
+    <button onclick="openSaveNameDialog()" style="font-size:12px;padding:3px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:center;gap:4px"><span>💾</span><span>save</span></button>
+    <button onclick="openDrafts()" style="font-size:12px;padding:3px 10px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;display:flex;align-items:center;gap:4px"><span>📂</span><span>drafts</span></button>
+    <div class="engine-badge" id="autosaveBadge" style="opacity:0;transition:opacity .4s"><span id="autosaveLabel" style="font-size:10px;color:var(--color-text-tertiary)">saved</span></div>
+    <div class="engine-badge"><div class="engine-dot" id="engineDot"></div><span id="engineLabel">AI engine</span></div>
   </div>
   <div class="main">
     <div class="sidebar">
@@ -180,6 +211,13 @@ select,input,textarea,button{font-family:var(--font-sans)}
         <button class="cp-apply" onclick="applyCustomForm()">apply & build template</button>
       </div>
       <div id="schemeDisplay"></div>
+      <div id="acrosticPanel" style="display:none;margin-top:8px">
+        <div class="sb-h">acrostic word</div>
+        <input id="acrosticWord" type="text" maxlength="26"
+          style="width:100%;font-size:13px;padding:4px 7px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);letter-spacing:.1em;text-transform:uppercase"
+          placeholder="e.g. HOPE">
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:3px;line-height:1.4">Lines will rebuild to match. Each line must start with its letter.</div>
+      </div>
       <div id="meterPanel" style="margin-top:8px">
         <div class="sb-h">meter</div>
         <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px" id="meterDesc"></div>
@@ -187,17 +225,33 @@ select,input,textarea,button{font-family:var(--font-sans)}
         <div style="font-size:10px;color:var(--color-text-tertiary);line-height:1.4" id="meterModeDesc"></div>
       </div>
       <div style="flex:1"></div>
-      <button class="ref-btn" onclick="openRef()" style="margin-top:16px">
-        <span>📖</span><span>form reference library</span>
-      </button>
+      <button class="ref-btn" onclick="openRef()"><span>📖</span><span>form reference library</span></button>
     </div>
     <div class="workspace">
       <input class="poem-title-input" id="poemTitle" placeholder="untitled poem…">
       <div id="templateArea"></div>
       <div class="actions">
-        <button onclick="clearPoem()">↺ clear</button>
-        <button onclick="showPoem()">👁 view</button>
-        <button onclick="copyPoem()">⎘ copy</button>
+        <button id="undoBtn" onclick="undoHistory()" disabled title="Ctrl+Z">↩ undo</button>
+        <button id="redoBtn" onclick="redoHistory()" disabled title="Ctrl+Shift+Z">↪ redo</button>
+        <button onclick="clearPoem()" title="Ctrl+Shift+X">↺ clear</button>
+        <button onclick="showPoem()" title="Ctrl+Enter">👁 view</button>
+        <button onclick="copyPoem()" title="Ctrl+Shift+C">⎘ copy</button>
+        <button onclick="downloadTxt()" title="Ctrl+Shift+D">⬇ txt</button>
+        <button id="helpBtn" onclick="toggleHelp()" title="keyboard shortcuts" style="margin-left:auto;opacity:.5">?</button>
+      </div>
+      <div id="shortcutHelp" style="display:none;margin-top:.5rem;padding:.6rem .75rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:.5px solid var(--color-border-tertiary);font-size:11px;color:var(--color-text-secondary);line-height:2">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:4px">keyboard shortcuts</div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:0 12px">
+          <kbd>Ctrl+Enter</kbd><span>view poem</span>
+          <kbd>Ctrl+Shift+C</kbd><span>copy poem</span>
+          <kbd>Ctrl+Shift+D</kbd><span>download .txt</span>
+          <kbd>Ctrl+Shift+X</kbd><span>clear poem</span>
+          <kbd>Ctrl+S</kbd><span>save draft</span>
+          <kbd>Ctrl+Z</kbd><span>undo</span>
+          <kbd>Ctrl+Shift+Z</kbd><span>redo</span>
+          <kbd>Escape</kbd><span>close dialogs</span>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);margin-top:5px">Use Cmd instead of Ctrl on Mac.</div>
       </div>
       <div class="output-area" id="outputArea"></div>
     </div>
@@ -205,115 +259,560 @@ select,input,textarea,button{font-family:var(--font-sans)}
 </div>
 
 <script>
-// ── reference data ────────────────────────────────────────────────────────────
-const REF_DATA=[
-  {cat:"Fixed syllabic",name:"Haiku",
-    what:"A three-line Japanese poem with a strict 5-7-5 syllable structure, traditionally evoking a moment in nature, a season, or a sensory image.",
-    history:"Haiku evolved from the opening verse (hokku) of the collaborative renga form in 15th-century Japan. The poet Matsuo Bashō (1644–1694) elevated it into a standalone art form, followed by Yosa Buson and Kobayashi Issa. The word 'haiku' was coined by Masaoka Shiki in the late 19th century. Western poets embraced it in the early 20th century through the Imagist movement.",
-    use:"Best used for capturing a fleeting moment, a natural image, or a sudden emotional insight. Traditionally includes a kigo (seasonal word) and a kireji (cutting word) that creates a pause or contrast between two images."},
-  {cat:"Fixed syllabic",name:"Senryū",
-    what:"A three-line Japanese form identical in structure to haiku (5-7-5), but focused on human nature, irony, and humor rather than nature and seasons.",
-    history:"Named after the 18th-century Japanese poet Karai Senryū, whose anthology of comic verse popularized the form. While haiku traditionally require a seasonal reference, senryū have no such constraint — making them more urban, satirical, and psychologically direct.",
-    use:"Best used for wry observations about human behavior, relationships, and social situations. Often darker or funnier than haiku. No seasonal word required."},
-  {cat:"Fixed syllabic",name:"Tanka",
-    what:"A five-line Japanese poem with a 5-7-5-7-7 syllable structure. The first three lines (the 'upper verse') present an image; the final two (the 'lower verse') add a personal reflection or turn.",
-    history:"One of the oldest Japanese poetic forms, dating to the 7th century. It dominated Japanese court poetry for centuries and was the primary form in the Manyoshu (c. 759 CE). When haiku emerged as an independent form, tanka continued as a vehicle for personal emotion and lyric reflection. It remains widely practiced in Japan today.",
-    use:"Best used for poems that pair an external image with an inner emotional response. The volta between lines 3 and 4 is the heart of the form — a shift from observation to feeling."},
-  {cat:"Fixed syllabic",name:"Cinquain",
-    what:"A five-line American syllabic poem with a 2-4-6-8-2 structure, creating a shape that swells and then contracts.",
-    history:"Invented by American poet Adelaide Crapsey (1878–1914), who was influenced by Japanese syllabic forms and French vers libre. Published posthumously in 1915. Several variants have since emerged, including word-count cinquains popular in schools.",
-    use:"Best used for compact lyric poems where the short closing line delivers a final punch, reversal, or image. The pyramidal shape lends itself to building momentum before a sudden collapse."},
-  {cat:"Rhyming",name:"Sonnet (Shakespearean)",
-    what:"A 14-line poem in iambic pentameter, divided into three quatrains (ABAB CDCD EFEF) and a closing couplet (GG). The couplet typically delivers the poem's resolution or turn.",
-    history:"The English or Shakespearean sonnet developed from the Italian sonnet imported by Thomas Wyatt and Henry Howard in the 16th century. Shakespeare's 154 sonnets (published 1609) defined the form for the English tradition. It became the dominant lyric form of the Renaissance and continues to be widely written today.",
-    use:"Best used for poems that build an argument, meditation, or emotional situation across three quatrains and then resolve it — often with a surprising or epigrammatic couplet. The iambic pentameter mirrors natural English speech rhythms."},
-  {cat:"Rhyming",name:"Sonnet (Petrarchan)",
-    what:"A 14-line poem divided into an octave (ABBAABBA) and a sestet (CDECDE or variant). A volta — a turn in thought or feeling — separates them.",
-    history:"Developed by the Italian poet Francesco Petrarca (Petrarch, 1304–1374) in his Canzoniere, a sequence of 366 poems addressed to a woman named Laura. Introduced to England by Thomas Wyatt in the 1530s. The stricter rhyme scheme (only two rhyme sounds in the octave) is considered more demanding than the Shakespearean variant.",
-    use:"Best used when the poem has a clear two-part structure: a problem, question, or situation in the octave, and an answer, resolution, or shift in the sestet. The volta is the emotional and intellectual hinge of the poem."},
-  {cat:"Rhyming",name:"Limerick",
-    what:"A five-line comic poem with AABBA rhyme and a strong anapestic bounce. Lines 1, 2, and 5 are longer; lines 3 and 4 are shorter.",
-    history:"The form was popularized — though not invented — by Edward Lear in his Book of Nonsense (1846). The name may derive from Limerick, Ireland, though the connection is disputed. Limericks have been a vehicle for wit, wordplay, and bawdy humor for nearly two centuries.",
-    use:"Almost exclusively comic or satirical. The bouncy anapestic rhythm and the setup-punchline structure (lines 1-2 set up, lines 3-4 develop, line 5 delivers the joke) make it ideal for wordplay and surprise endings."},
-  {cat:"Rhyming",name:"Ballad stanza",
-    what:"A four-line stanza alternating between lines of roughly 8 and 6 syllables (iambic tetrameter and trimeter), with an ABCB rhyme scheme.",
-    history:"Rooted in oral tradition and folk song, the ballad stanza is one of the oldest forms in English poetry. It was the meter of medieval ballads like 'Barbara Allen' and 'Lord Randal,' and was later adopted by poets like Blake, Keats, and Coleridge ('The Rime of the Ancient Mariner'). Its sing-song quality reflects its origins in music.",
-    use:"Best used for narrative poems — telling a story with momentum. The short line 4 creates a natural pause, ideal for a refrain or a quiet emotional beat. Works well for folk-inflected, dramatic, or gothic subject matter."},
-  {cat:"Rhyming",name:"Heroic couplets",
-    what:"Pairs of rhyming lines in iambic pentameter. The closed couplet — where each pair forms a complete grammatical and logical unit — is the most celebrated variant.",
-    history:"Used by Chaucer in the 14th century and perfected as an instrument of wit and argument by John Dryden and Alexander Pope in the 17th and 18th centuries. Pope's Rape of the Lock and Essay on Man demonstrate the form at its most precise and epigrammatic. Fell out of fashion with the Romantics but never disappeared.",
-    use:"Excellent for satire, argument, and aphoristic writing. The tight constraint of the couplet rewards compression — every word must earn its place. The form can feel stiff for emotional lyric poetry but shines for wit and intellectual content."},
-  {cat:"Rhyming",name:"Terza rima",
-    what:"An interlocking chain-rhyme scheme: ABA BCB CDC, continuing indefinitely, traditionally closed with a single line or couplet rhyming the middle line of the last tercet.",
-    history:"Invented by Dante Alighieri for the Divine Comedy (c. 1308–1320), one of the most ambitious uses of a verse form in literary history. Later adopted by Petrarch and Boccaccio. In English, Shelley used it brilliantly in 'Ode to the West Wind' (1820). The interlocking rhymes create a sense of forward momentum and inevitability.",
-    use:"Best used for sustained, serious, or visionary poems. The chain structure means no stanza is fully closed — each one reaches forward into the next, creating a powerful sense of motion. Demanding to write in English due to its rhyme requirements."},
-  {cat:"Rhyming",name:"Ottava rima",
-    what:"An eight-line stanza in iambic pentameter with ABABABCC rhyme. The closing couplet often provides a comic or ironic deflation of the six preceding lines.",
-    history:"An Italian form used by Boccaccio and Ariosto. In English, it reached its height in Byron's Don Juan (1819–1824), where Byron exploited the couplet's comic potential to devastating effect. Keats also used it in 'Isabella.' The form demands facility with multiple rhymes over six lines before the couplet release.",
-    use:"Remarkably versatile — works for heroic narrative and for comic, mock-heroic, and satirical verse. The six-line build followed by a couplet release creates natural dramatic rhythm. Byron's use of the closing couplet for a sudden tonal shift is a technique worth studying and imitating."},
-  {cat:"Rhyming",name:"Spenserian stanza",
-    what:"A nine-line stanza: eight lines of iambic pentameter followed by an alexandrine (iambic hexameter), with ABABBCBCC rhyme.",
-    history:"Invented by Edmund Spenser for The Faerie Queene (1590–1596), an epic allegorical poem. Later used by Burns, Keats ('The Eve of St. Agnes'), Byron ('Childe Harold's Pilgrimage'), and Shelley ('Adonais'). The alexandrine — the long ninth line — gives each stanza a sense of grandeur and conclusion.",
-    use:"Best suited to long, ambitious narrative or meditative poems. The complex rhyme scheme and the extended closing line create a stately, ceremonial quality. Demanding but rewarding — the constraint forces compression and inventiveness."},
-  {cat:"Repetition forms",name:"Villanelle",
-    what:"A 19-line poem with two refrains and two rhyme sounds. Five tercets alternate the two refrains as their third lines; the closing quatrain ends with both refrains together.",
-    history:"French in origin but developed by Italian poets. Dylan Thomas's 'Do Not Go Gentle into That Good Night' (1951) made it one of the most celebrated forms in English. Elizabeth Bishop's 'One Art' is another landmark example. The obsessive repetition of the refrains suits themes of grief, fixation, and inevitability.",
-    use:"The repeated refrains should be lines that can accumulate meaning and emotional weight with each repetition — lines that mean slightly differently each time they return. Best used for poems about loss, obsession, memory, or any subject where circling back is thematically appropriate."},
-  {cat:"Repetition forms",name:"Pantoum",
-    what:"An interlocking quatrain form where lines 2 and 4 of each stanza become lines 1 and 3 of the next. The final stanza loops back to incorporate lines from the first stanza.",
-    history:"Adapted from the Malay pantun by French poets in the 19th century, notably Leconte de Lisle and Charles Baudelaire. Later popularized in English by John Ashbery and Carolyn Kizer. The form's recursive structure — lines keep returning — gives it a dreamlike, incantatory quality.",
-    use:"Best used for poems that circle back on themselves thematically — memory, obsession, ritual, or dream. Because each line appears twice in different contexts, choose lines that can shift meaning with their surroundings. The closing stanza's return to the opening lines gives the poem a sense of inevitable return."},
-  {cat:"Repetition forms",name:"Triolet",
-    what:"An eight-line French form where the first line repeats as lines 4 and 7, and lines 1–2 repeat as lines 7–8. Only two rhyme sounds are used throughout.",
-    history:"A medieval French form revived by poets in the 19th century. Hardy, Dobson, and later Wendy Cope wrote notable triolets. Its compressed repetition makes it feel more like a riddle or a musical round than a conventional poem.",
-    use:"Best used for short, playful, or ironic poems where the repeated lines can take on new resonance. The tight constraint rewards wit. Because it's so short, every word choice matters enormously."},
-  {cat:"Repetition forms",name:"Rondeau",
-    what:"A 15-line French form using only two rhyme sounds. The opening words return twice as a short refrain (rentrement) at lines 9 and 15.",
-    history:"A major form of French poetry from the 14th through 17th centuries, used by Clément Marot and Charles d'Orléans. In English, John McCrae's 'In Flanders Fields' (1915) is perhaps the most famous example. The form creates a sense of circularity and return through its rentrement.",
-    use:"Best used for poems with a strong, memorable opening phrase that can resonate differently when it returns as a refrain. The rentrement — just two or three words — must be chosen with great care, as it carries the emotional weight of the poem's conclusion."},
-  {cat:"Eastern forms",name:"Ghazal",
-    what:"A series of autonomous couplets sharing an end-word or refrain (radif) and a preceding rhyme (radif). The final couplet (maqta) traditionally includes the poet's name or signature.",
-    history:"One of the oldest poetic forms in the world, originating in 7th-century Arabia and developed in Persian, Urdu, and Turkish poetry by poets including Rumi, Hafiz, and Ghalib. Introduced to English poetry through translations and later practiced by Agha Shahid Ali, who championed strict formal ghazals in English.",
-    use:"Each couplet should stand alone as an independent image or thought — unlike Western stanza forms, couplets need not build on each other. The binding element is the radif (end-word/phrase), which should appear at the end of both lines of the first couplet and the second line of every subsequent couplet. The maqta's self-naming is a traditional signature of the form."},
-  {cat:"Eastern forms",name:"Renga (opening)",
-    what:"A collaborative Japanese linked-verse form. This template covers the opening hokku (5-7-5) and the first responding wakiku (7-7), which together form the seed of the full renga.",
-    history:"Renga flourished in Japan from the 13th through 16th centuries as a social and artistic practice — poets would gather and compose linked verses collaboratively, sometimes over days. The hokku (opening verse) eventually became the independent haiku. Basho was a master of both forms.",
-    use:"The hokku sets the season, mood, and imagery of the entire linked poem. The wakiku should respond to and extend — but not simply repeat — the hokku's imagery. In a full renga, subsequent poets would continue the chain, shifting mood and image with each link."},
-  {cat:"Ode forms",name:"Pindaric ode",
-    what:"A three-part Greek choral ode: strophe (the turn), antistrophe (the counter-turn), and epode (the stand). The strophe and antistrophe share the same metrical structure; the epode differs.",
-    history:"Named for the Greek lyric poet Pindar (c. 518–438 BCE), who wrote odes celebrating athletes at the Olympic and other Panhellenic games. Originally performed by choruses with dance movements. Adapted into English by Ben Jonson and Abraham Cowley in the 17th century, though often loosely.",
-    use:"Best used for celebratory, public, or ceremonial subjects. The three-part structure naturally suits poems that present a situation, respond to it, and then draw a conclusion. The form's grandeur can feel elevated or ponderous depending on execution."},
-  {cat:"Ode forms",name:"Horatian ode",
-    what:"A lyric ode in regular, equal stanzas — typically quatrains — with a calm, reflective, and personal tone, in contrast to the public grandeur of the Pindaric ode.",
-    history:"Named for the Roman poet Horace (65–8 BCE), whose Odes are intimate meditations on friendship, mortality, love, and the pleasures of simple life. Adapted into English by Marvell ('An Horatian Ode'), Collins, Keats, and others. The form's regularity and restraint suit personal, philosophical reflection.",
-    use:"Best used for meditative, personal, or philosophical poems where you want a sense of quiet formal control. Unlike the Pindaric ode, there's no prescribed three-part structure — the poem simply develops across equal stanzas. Add as many stanzas as the thought requires."},
-  {cat:"Elegiac",name:"Elegiac couplet",
-    what:"The classical Greek and Roman elegiac meter: alternating lines of dactylic hexameter and dactylic pentameter. In syllabic approximation, roughly 12 and 10 syllables.",
-    history:"The dominant meter of ancient elegy, epigram, and love poetry. Used by Ovid in the Amores and Tristia, Tibullus, Propertius, and the Greek Anthology poets. In English, it is usually approximated rather than strictly reproduced, since quantitative meter does not map easily onto stress-based English.",
-    use:"Best used for love poems, laments, meditations, and epigrams — the full range of classical elegiac subject matter. The contrast between the longer hexameter and shorter pentameter lines creates a natural ebb and flow, like the tide."},
-  {cat:"Elegiac",name:"Elegy (free verse)",
-    what:"A poem of mourning, loss, or lamentation in free verse. The template provides structural prompts — opening, remembrance, closing — as a loose scaffold.",
-    history:"The elegy is one of the oldest poetic modes, from classical antiquity through Milton's Lycidas, Tennyson's In Memoriam, Whitman's 'When Lilacs Last in the Dooryard Bloom'd,' and Rilke's Duino Elegies. Modern elegies often resist consolation, sitting with grief rather than resolving it.",
-    use:"Best used to mourn a person, a place, a relationship, or an era. The three-part scaffold — loss, remembrance, acceptance or question — is a natural emotional arc, but need not be followed strictly. The most powerful elegies often resist easy consolation."},
-  {cat:"Elegiac",name:"Epitaph",
-    what:"A short memorial poem or inscription, often rhymed, intended to commemorate the dead. Typically compact, formal, and resonant.",
-    history:"One of the oldest poetic forms — epitaphs appear on Greek and Roman tombstones and in the Greek Anthology. In English, Ben Jonson, Dryden, and Pope all wrote notable epitaphs. The form demands extraordinary compression: a life, a loss, and a feeling in four lines.",
-    use:"Best used for compression and tribute. Every word must carry weight. The rhyme scheme gives the poem a sense of closure and permanence. Can be sincere, ironic, or even darkly comic — the form has been used for all three."},
-  {cat:"Acrostic & visual",name:"Acrostic",
-    what:"A poem where the first letters of each line, read vertically, spell out a word, name, or message.",
-    history:"A form with ancient roots — acrostics appear in the Hebrew Bible (Psalm 119) and the works of Roman poets. Medieval poets used them as signatures. Lewis Carroll wrote acrostic poems for Alice Liddell. They remain popular as personalized poems for children and as puzzles.",
-    use:"Best used when the hidden word or name is itself meaningful — a person's name, a theme, a dedication. The constraint of the first letter forces unexpected word choices, which can produce surprising and beautiful lines. Let the constraint work for you rather than against you."},
-  {cat:"Free verse",name:"Free verse",
-    what:"Poetry without fixed meter, rhyme scheme, or line length. The poet determines all formal choices — lineation, rhythm, repetition — based on the needs of the poem.",
-    history:"Free verse (vers libre) was pioneered in France in the 1880s and embraced by Walt Whitman in Leaves of Grass (1855). The Imagists — Pound, H.D., Amy Lowell — made it the dominant mode of 20th-century poetry. Most contemporary poetry is written in some form of free verse.",
-    use:"Best used when the subject matter, voice, or emotional content demands freedom from received form. The absence of fixed constraints doesn't mean the absence of craft — the best free verse is intensely deliberate about rhythm, sound, and lineation. Every line break is a choice."},
-  {cat:"Free verse",name:"Prose poem",
-    what:"A poem written in continuous prose — no line breaks — but with the compression, imagery, attention to sound, and emotional intensity of poetry.",
-    history:"Associated with Baudelaire's Paris Spleen (1869), widely considered the founding text of the prose poem as a conscious form. Later developed by Rimbaud, Ponge, and in English by Russell Edson, Claudia Rankine, and many others. The form deliberately collapses the boundary between poetry and prose.",
-    use:"Best used when lineation would feel artificial or when the subject calls for a sustained, immersive texture rather than the pause of a line break. Works well for dream sequences, memories, and surreal or associative content. The paragraph is the basic unit of form."},
+// ═══════════════════════════════════════════════════════════════
+// HYBRID SYLLABLE ENGINE v5
+//
+// Strategy:
+// 1. JS word lookup table handles ALL common English words
+//    with known tricky syllable counts (fastest, most reliable)
+// 2. JS heuristic handles unknown words reasonably well
+// 3. AI API is called for stress pattern analysis only,
+//    since syllable counting is now done entirely in JS
+//
+// This eliminates the AI overcounting problem entirely for
+// common words, and makes the tool much faster (no API wait
+// for syllable count — only needed for stress pattern mode).
+// ═══════════════════════════════════════════════════════════════
+
+// ── Word syllable lookup table ─────────────────────────────────
+// Format: word (lowercase, no punctuation) → syllable count
+// Covers: common words the heuristic gets wrong, contractions,
+// possessives, and any word the AI has been miscounting.
+const WORD_SYL = {
+  // Pronouns & determiners — all 1 syllable
+  i:1, a:1, the:1, an:1, my:1, your:1, his:1, her:1, its:1,
+  our:1, their:1, we:1, you:1, he:1, she:1, it:1, me:1, him:1,
+  us:1, them:1, who:1, whom:1, whose:1, what:1, which:1,
+  this:1, that:1, these:1, those:1,
+
+  // Common verbs — all 1 syllable
+  is:1, are:1, was:1, were:1, be:1, been:1, am:1,
+  do:1, did:1, done:1, does:1, have:1, has:1, had:1,
+  can:1, could:1, will:1, would:1, shall:1, should:1,
+  may:1, might:1, must:1, let:1,
+  go:1, went:1, gone:1, come:1, came:1, came:1,
+  give:1, gave:1, get:1, got:1, put:1, set:1, sit:1, sat:1,
+  see:1, saw:1, know:1, knew:1, think:1, thought:1,
+  say:1, said:1, tell:1, told:1, take:1, took:1,
+  make:1, made:1, find:1, found:1, leave:1, left:1,
+  look:1, like:1, love:1, loved:1, live:1, need:1,
+  seem:1, seemed:1, feel:1, felt:1, call:1, called:1,
+  keep:1, kept:1, mean:1, meant:1, move:1, moved:1,
+  pay:1, paid:1, play:1, played:1, run:1, ran:1, send:1, sent:1,
+  show:1, showed:1, stand:1, stood:1, hear:1, heard:1,
+  lose:1, lost:1, hold:1, held:1, bring:1, brought:1,
+  write:1, wrote:1, read:1, lead:1, led:1, meet:1, met:1,
+  grow:1, grew:1, fall:1, fell:1, cut:1, hit:1, let:1, buy:1,
+  turn:1, start:1, try:1, tried:1, ask:1, asked:1, use:1, used:1,
+  want:1, wanted:2, help:1, helped:1, walk:1, walked:1,
+  work:1, worked:1, wait:1, wish:1,
+
+  // Common nouns — all 1 syllable
+  man:1, men:1, day:1, days:1, way:1, time:1, times:1,
+  year:1, years:1, place:1, life:1, world:1, hand:1, hands:1,
+  part:1, heart:1, hearts:1, eye:1, eyes:1, face:1, word:1, words:1,
+  door:1, home:1, name:1, night:1, side:1, thing:1, things:1,
+  thought:1, thoughts:1, land:1, light:1, mind:1, mouth:1,
+  road:1, room:1, self:1, song:1, songs:1, soul:1, souls:1,
+  star:1, stars:1, sun:1, truth:1, voice:1, wind:1, god:1, gods:1,
+  blood:1, bone:1, bones:1, breath:1, cloud:1, clouds:1,
+  dark:1, dawn:1, death:1, dream:1, dreams:1, dust:1,
+  earth:1, end:1, fire:1, flesh:1, flower:2, flowers:2,
+  grace:1, grave:1, ground:1, grief:1, hate:1, hope:1,
+  house:1, joy:1, leaf:1, leaves:2, love:1, moon:1,
+  pain:1, peace:1, rain:1, sea:1, shade:1, shore:1,
+  sight:1, sky:1, sleep:1, snow:1, spring:1, stone:1,
+  strength:1, tear:1, tears:1, war:1, wave:1, waves:1,
+  wind:1, wing:1, wings:1, wood:1, age:1, art:1, air:1,
+
+  // Prepositions & conjunctions — all 1 syllable
+  of:1, in:1, to:1, for:1, on:1, at:1, by:1,
+  from:1, up:1, out:1, as:1, so:1, but:1, or:1, nor:1,
+  not:1, no:1, yet:1, still:1, than:1, then:1, when:1,
+  where:1, while:1, how:1, why:1, here:1, there:1, now:1,
+  just:1, all:1, each:1, both:1, such:1, more:1, most:1,
+  much:1, well:1, long:1, own:1, old:1, new:1, great:1,
+  good:1, high:1, last:1, small:1, true:1, white:1, black:1,
+  bright:1, cold:1, deep:1, far:1, hard:1, near:1, old:1,
+  rich:1, soft:1, sweet:1, wide:1, wild:1, young:1,
+  with:1, through:1, down:1, off:1, since:1, once:1,
+  soon:1, though:1, thus:1, too:1, else:1, even:2,
+
+  // Tricky 1-syllable words (often miscounted)
+  sure:1, pure:1, hour:1, our:1, fire:1, hire:1, wire:1,
+  tire:1, lyre:1, prayer:1, there:1, here:1, where:1, were:1,
+  are:1, ore:1, more:1, pore:1, core:1, bore:1, fore:1,
+  gore:1, lore:1, score:1, store:1, wore:1, shore:1,
+  breathe:1, soothe:1, loathe:1, bathe:1, clothe:1,
+
+  // Contractions — always 1 syllable
+  "i'm":1, "i've":1, "i'll":1, "i'd":1,
+  "we're":1, "we've":1, "we'll":1, "we'd":1,
+  "you're":1, "you've":1, "you'll":1, "you'd":1,
+  "they're":1, "they've":1, "they'll":1, "they'd":1,
+  "he's":1, "he'll":1, "he'd":1,
+  "she's":1, "she'll":1, "she'd":1,
+  "it's":1, "it'll":2, "that's":1, "that'll":2,
+  "who's":1, "who'll":1, "who'd":1,
+  "what's":1, "where's":1, "when's":1,
+  "here's":1, "there's":1,
+  "aren't":1, "isn't":2, "wasn't":2, "weren't":1,
+  "hasn't":2, "haven't":2, "hadn't":2,
+  "don't":1, "doesn't":2, "didn't":2,
+  "won't":1, "wouldn't":2, "shouldn't":2, "couldn't":2,
+  "can't":1, "mustn't":2, "let's":1,
+
+  // Possessives strip the 's — same count as base word
+  // These are handled by the stripPossessive function below
+
+  // 2-syllable words
+  power:2, tower:2, flower:2, shower:2, hour:1,
+  over:2, under:2, after:2, even:2, never:2,
+  every:3, river:2, heaven:2, given:2, seven:2,
+  listen:2, open:2, person:2, water:2, winter:2,
+  summer:2, morning:2, during:2, other:2, mother:2,
+  father:2, sister:2, brother:2, daughter:2, children:3,
+  moment:2, nothing:2, something:2, happen:2, human:2,
+  either:2, maybe:2, always:2, also:2, often:2,
+  only:2, any:2, many:2, body:2, copy:2, empty:2,
+  happy:2, holy:2, lonely:2, lovely:2, lively:2,
+  likely:2, nearly:2, only:2, simply:2, slowly:2,
+  softly:2, truly:2, deeply:2, freely:2, gently:2,
+  gladly:2, sadly:2, madly:2, badly:2, boldly:2,
+  coldly:2, darkly:2, sweetly:2, swiftly:2,
+  stressless:2, careless:2, homeless:2, hopeless:2,
+  useless:2, endless:2, needless:2, wordless:2,
+  soundless:2, lightless:2, breathless:2, nameless:2,
+  joyful:2, painful:2, hopeful:2, grateful:2,
+  peaceful:2, fearful:2, graceful:2, faithful:2,
+  beauty:2, spirit:2, nature:2, angel:2, garden:2,
+  glory:2, story:2, memory:3,
+  coming:2, going:2, making:2, taking:2, saying:2,
+  seeing:2, feeling:2, keeping:2, leaving:2,
+  living:2, loving:2, moving:2, knowing:2,
+  giving:2, holding:2, turning:2, longing:2,
+  burning:2, sighing:2, crying:2, dying:2,
+  rising:2, falling:2, calling:2, walking:2,
+  waiting:2, wanting:2, wishing:2, asking:2,
+  broken:2, chosen:2, frozen:2, golden:2, woven:2,
+  spoken:2, stolen:2, taken:2, written:2, hidden:2,
+  driven:2, fallen:2, gotten:2, ridden:2, risen:2,
+  shaken:2, woken:2, beaten:2, eaten:2, laden:2,
+  // 3-syllable words
+  eleven:3, however:3, together:3, another:3, remember:3,
+  beautiful:4, family:3, different:3, wonderful:3,
+  following:3, tomorrow:3, forever:3, whatever:3,
+  everyone:3, somewhere:2, someone:2, something:2,
+  anyone:3, anything:3, everything:4, everywhere:3,
+  yesterday:3, afternoon:3, understand:3,
+  // Numbers
+  one:1, two:1, three:1, four:1, five:1, six:1,
+  seven:2, eight:1, nine:1, ten:1, eleven:3, twelve:1,
+  thirteen:2, fourteen:2, fifteen:2, sixteen:2,
+  seventeen:3, eighteen:2, nineteen:2, twenty:2,
+
+  // Common -ine words (frequently rhymed)
+  mine:1, thine:1, line:1, pine:1, vine:1, wine:1, dine:1, fine:1,
+  shine:1, spine:1, shrine:1, swine:1, twine:1, divine:2, define:2,
+  design:2, decline:2, align:2, assign:2, combine:2, confine:2,
+  entwine:2, incline:2, outline:2, recline:2, refine:2, resign:2,
+  // Common -one/-own words
+  done:1, none:1, run:1, sun:1, gun:1, fun:1, son:1, ton:1, won:1,
+  bone:1, cone:1, lone:1, stone:1, tone:1, zone:1, phone:1, throne:1,
+  // Common -ours/-ours words
+  yours:1, ours:1, hours:1, flowers:2, powers:2, towers:2,
+};
+
+// ── Core syllable counter ──────────────────────────────────────
+function sylForWord(raw) {
+  // Strip punctuation, lowercase
+  const clean = raw.toLowerCase().replace(/[^a-z''-]/g, '');
+  if (!clean) return 0;
+
+  // Check full form with apostrophe (contractions)
+  if (WORD_SYL[clean] !== undefined) return WORD_SYL[clean];
+
+  // Strip trailing possessive 's or s' and check base
+  const depos = clean.replace(/'s$/, '').replace(/s'$/, '');
+  if (depos !== clean && WORD_SYL[depos] !== undefined) return WORD_SYL[depos];
+
+  // Strip apostrophe and check again
+  const noapos = clean.replace(/['']/g, '');
+  if (WORD_SYL[noapos] !== undefined) return WORD_SYL[noapos];
+
+  // Heuristic fallback for unknown words
+  return sylHeuristic(noapos);
+}
+
+function sylHeuristic(w) {
+  if (!w) return 0;
+  w = w.toLowerCase().replace(/[^a-z]/g, '');
+  if (!w) return 0;
+  // Remove silent e
+  w = w.replace(/(?:[^laeiouy])e$/, 'x');
+  // Count vowel clusters
+  let s = (w.match(/[aeiouy]+/g) || []).length;
+  // Remove non-syllabic -ed (walked=1, wanted=2)
+  if (/[^td]ed$/.test(w)) s = Math.max(1, s - 1);
+  return Math.max(1, s);
+}
+
+// ── Get rhyme sound for a word ─────────────────────────────────
+function rhymeSoundFor(word) {
+  const w = word.toLowerCase().replace(/[^a-z]/g, '');
+  const vi = w.search(/[aeiou]/);
+  return vi === -1 ? w.slice(-2) : w.slice(vi);
+}
+
+// ── Count syllables for an entire line ────────────────────────
+function countLineSyllables(text) {
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  return words.reduce((sum, w) => sum + sylForWord(w), 0);
+}
+
+// ── Get stress pattern via AI (only when needed) ───────────────
+const stressCache = new Map();
+let pendingAnalyses = 0;
+
+function setEngineStatus(loading) {
+  document.getElementById('engineDot').className = 'engine-dot' + (loading ? ' loading' : '');
+  document.getElementById('engineLabel').textContent = loading ? 'analyzing…' : 'AI engine';
+}
+
+async function getStressPattern(text) {
+  const key = text.trim().toLowerCase();
+  if (stressCache.has(key)) return stressCache.get(key);
+
+  pendingAnalyses++;
+  setEngineStatus(true);
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 200,
+        system: `You are a poetry stress analyst. Given a line of poetry, return ONLY a JSON object with the stress pattern.
+Use S for stressed syllables and u for unstressed. Space-separate by word.
+Example: "Shall I compare thee" → {"pattern": "S u uS u"}
+Return ONLY: {"pattern": "..."}`,
+        messages: [{ role: 'user', content: text.trim() }]
+      })
+    });
+    const data = await response.json();
+    const raw = (data.content?.[0]?.text || '{}').replace(/```json|```/g, '').trim();
+    const result = JSON.parse(raw);
+    stressCache.set(key, result.pattern || '');
+    return result.pattern || '';
+  } catch (e) {
+    return '';
+  } finally {
+    pendingAnalyses--;
+    if (pendingAnalyses <= 0) { pendingAnalyses = 0; setEngineStatus(false); }
+  }
+}
+
+// ── Get rhyme sound via AI (only for last word, cached) ────────
+const rhymeCache = new Map();
+
+async function getRhymeSoundAI(lastWord) {
+  const key = lastWord.toLowerCase().replace(/[^a-z]/g, '');
+  if (!key) return rhymeSoundFor(lastWord);
+  if (rhymeCache.has(key)) return rhymeCache.get(key);
+
+  // For common words, use JS — no need to hit the API
+  if (WORD_SYL[key] !== undefined) {
+    const sound = rhymeSoundFor(key);
+    rhymeCache.set(key, sound);
+    return sound;
+  }
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 100,
+        system: `Return ONLY JSON: {"rhymeSound": "<vowel+consonant ending that determines rhyme>", "nearRhymes": ["word1","word2","word3"]}
+Example: "fate" → {"rhymeSound":"ayt","nearRhymes":["late","great","wait"]}
+Example: "love" → {"rhymeSound":"uv","nearRhymes":["dove","above","of"]}`,
+        messages: [{ role: 'user', content: `Word: "${key}"` }]
+      })
+    });
+    const data = await response.json();
+    const raw = (data.content?.[0]?.text || '{}').replace(/```json|```/g, '').trim();
+    const result = JSON.parse(raw);
+    const sound = result.rhymeSound || rhymeSoundFor(key);
+    rhymeCache.set(key, sound);
+    // Store near rhymes too
+    if (result.nearRhymes) rhymeCache.set(key + '_near', result.nearRhymes);
+    return sound;
+  } catch (e) {
+    const sound = rhymeSoundFor(key);
+    rhymeCache.set(key, sound);
+    return sound;
+  }
+}
+
+// ── Rhyme hint helpers ─────────────────────────────────────────
+
+// Return cached hints for a word, or null if not yet available
+function getRhymeHints(lineId, word) {
+  const key = word.toLowerCase().replace(/[^a-z]/g, '');
+  const cached = rhymeCache.get(key + '_near');
+  if (cached) return cached.slice(0, 5);
+  return null;
+}
+
+// Fetch hints from AI then re-render
+async function fetchAndRenderHints(lineId, word) {
+  const st = getLS(lineId);
+  if (st.hintsLoading) return;
+  st.hintsLoading = true;
+  // getRhymeSoundAI already populates nearRhymes into the cache as a side-effect
+  await getRhymeSoundAI(word);
+  st.hintsLoading = false;
+  // Only re-render if mismatch still active and hints toggle still on
+  const togHints = document.getElementById('togHints');
+  if (togHints && togHints.checked && st.rhymeMismatch) renderFeedback(lineId);
+}
+
+// Replace the last word of a line with the suggested word
+function applyRhymeSuggestion(lineId, ta, suggestion) {
+  const val = ta.value;
+  const words = val.trimEnd().split(/(\s+)/);
+  // Find last non-whitespace token
+  for (let i = words.length - 1; i >= 0; i--) {
+    if (words[i].trim()) {
+      // Preserve punctuation suffix (comma, period, etc.) from the original last word
+      const punct = words[i].match(/[.,;:!?'"»]+$/);
+      words[i] = suggestion + (punct ? punct[0] : '');
+      break;
+    }
+  }
+  const newVal = words.join('');
+  ta.value = newVal;
+  lineValues[lineId] = newVal;
+  ta.style.height = '32px';
+  ta.style.height = ta.scrollHeight + 'px';
+  propagateRepeats(lineId, newVal);
+  // Re-trigger blur logic to refresh feedback
+  const lineDef = [...currentLines, ...closingLines].find(l => l.id === lineId);
+  const idx = [...currentLines, ...closingLines].indexOf(lineDef);
+  if (lineDef) onLineBlur(ta, lineDef, idx);
+  scheduleAutosave();
+}
+const lineState = {};
+function getLS(id) {
+  if (!lineState[id]) lineState[id] = { meterText: '', meterClass: 'line-fb', rhymeMismatch: false, syllables: null, rhymeSound: null, lastWord: null, hintsLoading: false };
+  return lineState[id];
+}
+
+function renderFeedback(id) {
+  const fb = document.getElementById('fb_' + id), ta = document.getElementById('line_' + id);
+  if (!fb || !ta) return;
+  const st = getLS(id);
+  const parts = [];
+  if (st.meterText) parts.push(st.meterText);
+  if (st.rhymeMismatch) parts.push('⚠ rhyme mismatch');
+
+  // Clear fb and rebuild
+  fb.innerHTML = '';
+  const textNode = document.createElement('span');
+  textNode.textContent = parts.join(' · ');
+  fb.appendChild(textNode);
+
+  const isErr = st.rhymeMismatch || st.meterClass === 'line-fb error';
+  const isWarn = !isErr && st.meterClass === 'line-fb warn';
+  const cls = isErr ? 'error' : isWarn ? 'warn' : st.meterText ? 'ok' : '';
+  fb.className = 'line-fb' + (cls ? ' ' + cls : '');
+  const isRep = ta.classList.contains('repeated');
+  ta.className = 'line-input' + (cls ? ' ' + cls : '') + (isRep ? ' repeated' : '');
+
+  // Rhyme hint chips — show when: hints on, rhyme mismatch, line has a last word
+  const togHints = document.getElementById('togHints');
+  if (togHints && togHints.checked && st.rhymeMismatch && st.lastWord) {
+    const hints = getRhymeHints(id, st.lastWord);
+    if (hints && hints.length) {
+      const chipRow = document.createElement('div');
+      chipRow.className = 'rhyme-hints';
+      hints.forEach(word => {
+        const chip = document.createElement('button');
+        chip.className = 'rhyme-chip';
+        chip.textContent = word;
+        chip.title = `replace last word with "${word}"`;
+        chip.addEventListener('click', () => applyRhymeSuggestion(id, ta, word));
+        chipRow.appendChild(chip);
+      });
+      fb.appendChild(chipRow);
+    } else if (!st.hintsLoading) {
+      // Fetch hints async if not already loading
+      fetchAndRenderHints(id, st.lastWord);
+    }
+  }
+}
+
+function applyMeterFeedback(lineId, lineDef, idx, syl, stressPattern) {
+  const togMeter = document.getElementById('togMeter').checked;
+  const st = getLS(lineId);
+  st.syllables = syl;
+  if (!togMeter) { st.meterText = ''; st.meterClass = 'line-fb ok'; renderFeedback(lineId); return; }
+  const m = currentForm.meter;
+  if (!m || m.type === 'free' || lineDef.syl === null || lineDef.syl === undefined) {
+    st.meterText = ''; st.meterClass = 'line-fb ok'; renderFeedback(lineId); return;
+  }
+  if (meterMode === 'syllable') {
+    const target = lineDef.syl || (m.counts ? m.counts[idx % m.counts.length] : null);
+    if (!target) { st.meterText = ''; st.meterClass = 'line-fb ok'; renderFeedback(lineId); return; }
+    const diff = syl - target;
+    if (diff === 0) { st.meterText = `✓ ${syl} syllables`; st.meterClass = 'line-fb ok'; }
+    else if (Math.abs(diff) <= 1) { st.meterText = `${syl} syl (target ~${target})`; st.meterClass = 'line-fb warn'; }
+    else { st.meterText = `${syl} syl — target ${target} (${diff > 0 ? 'too many' : 'too few'})`; st.meterClass = 'line-fb error'; }
+  } else {
+    if (stressPattern) {
+      const fp = { iambic: 'uS', trochaic: 'Su', anapestic: 'uuS', dactylic: 'Suu', spondaic: 'SS', amphibrachic: 'uSu', pyrrhic: 'uu' }[m.foot] || '';
+      const expected = fp.repeat(m.feet || 5), actual = stressPattern.replace(/\s/g, '');
+      st.meterText = `${stressPattern} (${syl} syl)${actual === expected ? ' ✓' : ''}`;
+      st.meterClass = actual === expected ? 'line-fb ok' : 'line-fb warn';
+    } else {
+      st.meterText = `${syl} syl (analyzing stress…)`;
+      st.meterClass = 'line-fb ok';
+    }
+  }
+  renderFeedback(lineId);
+}
+
+async function onLineBlur(ta, line, idx) {
+  pushUndo();
+  const val = ta.value.trim();
+  if (!val) {
+    const st = getLS(line.id); st.meterText = ''; st.meterClass = 'line-fb'; st.syllables = null; st.rhymeSound = null; st.lastWord = null; st.hintsLoading = false;
+    renderFeedback(line.id); checkAllRhymes(); return;
+  }
+
+  // Syllable count is instant — no API needed
+  const syl = countLineSyllables(val);
+
+  // Get last word for rhyme
+  const words = val.trim().split(/\s+/).filter(Boolean);
+  const lastWord = (words[words.length - 1] || '').replace(/[^a-zA-Z']/g, '');
+
+  // Store lastWord for hint chips; reset loading flag if word changed
+  const st = getLS(line.id);
+  if (st.lastWord !== lastWord) { st.hintsLoading = false; }
+  st.lastWord = lastWord;
+
+  // Apply meter feedback immediately with syllable count
+  applyMeterFeedback(line.id, line, idx, syl, null);
+
+  // Get rhyme sound (may be instant for known words, or async for unknown)
+  const rhymeSound = await getRhymeSoundAI(lastWord);
+  getLS(line.id).rhymeSound = rhymeSound;
+  checkAllRhymes();
+
+  // If in stress mode, fetch stress pattern asynchronously
+  if (meterMode === 'stress') {
+    const m = currentForm.meter;
+    if (m && m.type === 'stress') {
+      ta.classList.add('analyzing');
+      const fb = document.getElementById('fb_' + line.id);
+      if (fb) { fb.textContent = `${syl} syl — analyzing stress…`; fb.className = 'line-fb ok'; }
+      const pattern = await getStressPattern(val);
+      ta.classList.remove('analyzing');
+      applyMeterFeedback(line.id, line, idx, syl, pattern);
+    }
+  }
+}
+
+async function checkAllRhymes() {
+  const togRhyme = document.getElementById('togRhyme').checked;
+  const useSlant = document.getElementById('togSlant').checked;
+  const all = [...currentLines, ...closingLines];
+  all.forEach(l => getLS(l.id).rhymeMismatch = false);
+
+  if (togRhyme) {
+    const groups = {};
+    all.forEach(l => {
+      if (!l.rhyme) return;
+      const k = l.rhyme.toUpperCase().replace(/\d/, '');
+      if (!groups[k]) groups[k] = [];
+      const el = document.getElementById('line_' + l.id);
+      if (!el || !el.value.trim()) return;
+      const st = getLS(l.id);
+      const words = el.value.trim().split(/\s+/).filter(Boolean);
+      const lastWord = (words[words.length - 1] || '').toLowerCase().replace(/[^a-z]/g, '');
+      // Use cached rhyme sound if available, otherwise compute immediately
+      const sound = st.rhymeSound || rhymeSoundFor(lastWord);
+      const nearKey = lastWord + '_near';
+      const nearRhymes = rhymeCache.get(nearKey) || [];
+      groups[k].push({ id: l.id, sound, nearRhymes, lastWord });
+    });
+
+    Object.values(groups).forEach(grp => {
+      if (grp.length < 2) return;
+      grp.forEach((g, i) => {
+        const others = grp.filter((_, j) => j !== i);
+        if (others.every(o => !o.sound)) return;
+        const matches = others.some(o => {
+          if (!o.sound || !g.sound) return false;
+          if (g.sound === o.sound) return true;
+          // Normalise: compare last 3 and last 2 chars of the sound string
+          // This handles AI returning e.g. "aɪn" vs "ɪn" for nine/mine
+          const gEnd3 = g.sound.slice(-3), oEnd3 = o.sound.slice(-3);
+          const gEnd2 = g.sound.slice(-2), oEnd2 = o.sound.slice(-2);
+          if (gEnd2 === oEnd2 && gEnd2.length >= 2) return true;
+          if (useSlant) {
+            if (gEnd3 === oEnd3 && gEnd3.length >= 2) return true;
+            const gc = g.sound.replace(/[aeiou]/g, ''), oc = o.sound.replace(/[aeiou]/g, '');
+            if (gc === oc && gc.length > 0) return true;
+            if (g.nearRhymes.includes(o.lastWord) || o.nearRhymes.includes(g.lastWord)) return true;
+          }
+          return false;
+        });
+        if (!matches) getLS(g.id).rhymeMismatch = true;
+      });
+    });
+  }
+  all.forEach(l => renderFeedback(l.id));
+}
+
+// ═══════════════════════════════════════════════════════════════
+// REFERENCE DATA
+// ═══════════════════════════════════════════════════════════════
+const REF_DATA = [
+  {cat:"Fixed syllabic",name:"Haiku",what:"A three-line Japanese poem with a strict 5-7-5 syllable structure, traditionally evoking a moment in nature, a season, or a sensory image.",history:"Haiku evolved from the opening verse (hokku) of the collaborative renga form in 15th-century Japan. Matsuo Bashō (1644–1694) elevated it into a standalone art form. The word 'haiku' was coined by Masaoka Shiki in the late 19th century.",use:"Best used for capturing a fleeting moment or sensory image. Traditionally includes a kigo (seasonal word) and a kireji (cutting word) that creates a pause between two images."},
+  {cat:"Fixed syllabic",name:"Senryū",what:"A three-line Japanese form identical in structure to haiku (5-7-5), but focused on human nature, irony, and humor.",history:"Named after the 18th-century poet Karai Senryū. Unlike haiku, no seasonal reference is required.",use:"Best used for wry observations about human behavior, relationships, and social situations."},
+  {cat:"Fixed syllabic",name:"Tanka",what:"A five-line Japanese poem (5-7-5-7-7). The first three lines present an image; the final two add personal reflection.",history:"One of the oldest Japanese forms, dating to the 7th century. It dominated Japanese court poetry for centuries.",use:"Best used for poems pairing an external image with inner emotional response."},
+  {cat:"Fixed syllabic",name:"Cinquain",what:"A five-line American syllabic poem (2-4-6-8-2), creating a shape that swells then contracts.",history:"Invented by Adelaide Crapsey (1878–1914), influenced by Japanese syllabic forms.",use:"Best used for compact lyric poems where the short closing line delivers a final punch."},
+  {cat:"Rhyming",name:"Sonnet (Shakespearean)",what:"14 lines in iambic pentameter: three quatrains (ABAB CDCD EFEF) and a closing couplet (GG).",history:"Developed from the Italian sonnet by Thomas Wyatt and Henry Howard. Shakespeare's 154 sonnets (1609) defined the form.",use:"Best used for poems building an argument across three quatrains, resolved by a surprising couplet."},
+  {cat:"Rhyming",name:"Sonnet (Petrarchan)",what:"14 lines: an octave (ABBAABBA) and a sestet (CDECDE). A volta separates them.",history:"Developed by Francesco Petrarca in his Canzoniere. Introduced to England by Thomas Wyatt in the 1530s.",use:"Best used when the poem has a clear two-part structure: problem in the octave, resolution in the sestet."},
+  {cat:"Rhyming",name:"Limerick",what:"A five-line comic poem with AABBA rhyme and a strong anapestic bounce.",history:"Popularized by Edward Lear in his Book of Nonsense (1846).",use:"Almost exclusively comic or satirical. The setup-punchline structure makes it ideal for wordplay."},
+  {cat:"Rhyming",name:"Ballad stanza",what:"A four-line stanza alternating 8 and 6 syllables with ABCB rhyme.",history:"Rooted in oral tradition and folk song. Used by Blake, Keats, and Coleridge.",use:"Best used for narrative poems with momentum."},
+  {cat:"Rhyming",name:"Heroic couplets",what:"Pairs of rhyming lines in iambic pentameter.",history:"Used by Chaucer and perfected by Dryden and Pope.",use:"Excellent for satire, argument, and aphoristic writing."},
+  {cat:"Rhyming",name:"Terza rima",what:"Interlocking ABA BCB CDC chain-rhyme, closed with a couplet.",history:"Invented by Dante for the Divine Comedy (c. 1308–1320). Shelley used it in 'Ode to the West Wind'.",use:"Best for sustained, serious, or visionary poems."},
+  {cat:"Rhyming",name:"Ottava rima",what:"Eight-line stanzas in iambic pentameter with ABABABCC rhyme.",history:"An Italian form. Byron's Don Juan (1819–1824) is the landmark English example.",use:"Versatile — works for heroic narrative and comic or satirical verse."},
+  {cat:"Rhyming",name:"Spenserian stanza",what:"Nine-line stanzas (ABABBCBCC): eight pentameter lines + a closing alexandrine.",history:"Invented by Spenser for The Faerie Queene (1590–1596). Later used by Keats, Byron, and Shelley.",use:"Best for long, ambitious narrative or meditative poems."},
+  {cat:"Repetition forms",name:"Villanelle",what:"19 lines with two refrains and two rhyme sounds. Five tercets + a closing quatrain.",history:"Dylan Thomas's 'Do Not Go Gentle into That Good Night' and Elizabeth Bishop's 'One Art' are landmark examples.",use:"Best for loss, obsession, or memory — subjects that benefit from circular return."},
+  {cat:"Repetition forms",name:"Pantoum",what:"Interlocking quatrains: lines 2 & 4 become lines 1 & 3 of the next stanza.",history:"Adapted from the Malay pantun by French poets in the 19th century.",use:"Best for poems that circle back thematically — memory, obsession, ritual, or dream."},
+  {cat:"Repetition forms",name:"Triolet",what:"Eight-line form: line 1 repeats at lines 4 & 7; lines 1–2 repeat as lines 7–8.",history:"A medieval French form revived in the 19th century.",use:"Best for short, playful, or ironic poems."},
+  {cat:"Repetition forms",name:"Rondeau",what:"15-line French form. The opening words return twice as a short refrain (rentrement).",history:"John McCrae's 'In Flanders Fields' (1915) is the most famous English example.",use:"Best for poems with a strong opening phrase that resonates differently when it returns."},
+  {cat:"Eastern forms",name:"Ghazal",what:"Autonomous couplets sharing an end-word (radif). The final maqta couplet includes the poet's name.",history:"Originating in 7th-century Arabia, developed by Rumi, Hafiz, and Ghalib.",use:"Each couplet stands alone. The radif must appear at the end of both lines of the opening couplet and the second line of every couplet after."},
+  {cat:"Eastern forms",name:"Renga (opening)",what:"Collaborative Japanese linked verse — hokku (5-7-5) and wakiku (7-7) opening.",history:"Renga flourished in Japan from the 13th–16th centuries. The hokku eventually became the independent haiku.",use:"The hokku sets the season and imagery. The wakiku should extend — not simply repeat — those images."},
+  {cat:"Ode forms",name:"Pindaric ode",what:"Three-part Greek choral ode: strophe, antistrophe, epode.",history:"Named for Pindar (c. 518–438 BCE). Adapted in English by Ben Jonson and Abraham Cowley.",use:"Best for celebratory, public, or ceremonial subjects."},
+  {cat:"Ode forms",name:"Horatian ode",what:"Lyric ode in regular equal stanzas with a calm, reflective tone.",history:"Named for Horace (65–8 BCE). Adapted in English by Marvell, Keats, and others.",use:"Best for meditative, personal, or philosophical poems."},
+  {cat:"Elegiac",name:"Elegiac couplet",what:"Classical alternating hexameter and pentameter lines.",history:"The dominant meter of ancient elegy, used by Ovid, Tibullus, and Propertius.",use:"Best for love poems, laments, meditations, and epigrams."},
+  {cat:"Elegiac",name:"Elegy (free verse)",what:"A poem of mourning in free verse with a loose three-part scaffold.",history:"From classical antiquity through Milton, Tennyson, Whitman, and Rilke.",use:"Best for mourning a person, place, relationship, or era."},
+  {cat:"Elegiac",name:"Epitaph",what:"A short rhyming memorial poem, traditionally compact and resonant.",history:"One of the oldest forms — epitaphs appear on Greek and Roman tombstones.",use:"Every word must carry weight. Can be sincere, ironic, or darkly comic."},
+  {cat:"Acrostic & visual",name:"Acrostic",what:"The first letters of each line spell out a word, name, or message.",history:"Found in the Hebrew Bible (Psalm 119) and Roman poets. Lewis Carroll wrote acrostic poems for Alice Liddell.",use:"Best when the hidden word is itself meaningful."},
+  {cat:"Free verse",name:"Free verse",what:"Poetry without fixed meter, rhyme, or line length.",history:"Pioneered in France in the 1880s and embraced by Whitman in Leaves of Grass (1855).",use:"The absence of fixed constraints doesn't mean the absence of craft. Every line break is a deliberate choice."},
+  {cat:"Free verse",name:"Prose poem",what:"A poem in continuous prose — no line breaks — with the compression and intensity of poetry.",history:"Associated with Baudelaire's Paris Spleen (1869). Later developed by Rimbaud and in English by Russell Edson and Claudia Rankine.",use:"Best when lineation would feel artificial or when the subject calls for a sustained, immersive texture."},
 ];
 
-// ── unit generators ───────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+// UNIT GENERATORS
+// ═══════════════════════════════════════════════════════════════
 function pantoumUnit(n){const s=n+1,p=n;if(n===0)return[{id:`s${s}l1`,label:`stanza ${s}, line 1`},{id:`s${s}l2`,label:`stanza ${s}, line 2`},{id:`s${s}l3`,label:`stanza ${s}, line 3`},{id:`s${s}l4`,label:`stanza ${s}, line 4`}];return[{id:`s${s}l1`,label:`stanza ${s}, line 1`,repeats:`s${p}l2`},{id:`s${s}l2`,label:`stanza ${s}, line 2`},{id:`s${s}l3`,label:`stanza ${s}, line 3`,repeats:`s${p}l4`},{id:`s${s}l4`,label:`stanza ${s}, line 4`}];}
 function ghazalUnit(n){const c=n+1;if(n===0)return[{id:`g${c}l1`,label:`couplet ${c}, line 1 (ends with radif)`},{id:`g${c}l2`,label:`couplet ${c}, line 2 (ends with radif)`}];return[{id:`g${c}l1`,label:`couplet ${c}, line 1`},{id:`g${c}l2`,label:`couplet ${c}, line 2 (ends with radif)`}];}
 function horatianUnit(n){const s=n+1,L=["A","B","C","D","E","F","G","H"],a=L[(n*2)%L.length],b=L[(n*2+1)%L.length];return[{id:`ho${s}l1`,label:`stanza ${s}, line 1`,rhyme:a},{id:`ho${s}l2`,label:`stanza ${s}, line 2`,rhyme:b},{id:`ho${s}l3`,label:`stanza ${s}, line 3`,rhyme:a},{id:`ho${s}l4`,label:`stanza ${s}, line 4`,rhyme:b}];}
@@ -326,9 +825,9 @@ function elegyCoupletUnit(n){const c=n+1;return[{id:`el${c}l1`,label:`couplet ${
 
 const RC={A:["#E6F1FB","#185FA5"],B:["#E1F5EE","#0F6E56"],C:["#FAEEDA","#854F0B"],D:["#FAECE7","#993C1D"],E:["#FBEAF0","#993556"],F:["#EEEDFE","#534AB7"],G:["#EAF3DE","#3B6D11"],H:["#FCEBEB","#A32D2D"],A1:["#E6F1FB","#185FA5"],A2:["#FAEEDA","#854F0B"]};
 function rc(r){const k=r?r.toUpperCase().replace(/\d/,""):null;return RC[k]||["#F1EFE8","#5F5E5A"];}
-const FOOT_SYL={iambic:2,trochaic:2,anapestic:3,dactylic:3,spondaic:2,amphibrachic:3,pyrrhic:2,none:0};
 const FOOT_PAT={iambic:"uS",trochaic:"Su",anapestic:"uuS",dactylic:"Suu",spondaic:"SS",amphibrachic:"uSu",pyrrhic:"uu"};
 const FEET_NAME=["","monometer","dimeter","trimeter","tetrameter","pentameter","hexameter","heptameter","octameter"];
+const FOOT_SYL={iambic:2,trochaic:2,anapestic:3,dactylic:3,spondaic:2,amphibrachic:3,pyrrhic:2,none:0};
 const SCHEME_PRESETS=["ABAB","AABB","ABBA","ABCABC","ABABCC","AABBCC","ABCB","AAAA","ABCD"];
 
 const FORMS=[
@@ -355,7 +854,7 @@ const FORMS=[
   {cat:"Elegiac",name:"Elegiac couplet",desc:"Classical alternating hexameter and pentameter lines.",meter:{type:"syllable"},extensible:true,unitLabel:"couplet",minUnits:2,extendFn:elegyCoupletUnit,units:3,hasClosing:false},
   {cat:"Elegiac",name:"Elegy (free verse)",desc:"A mourning poem in free verse, meditating on loss.",meter:{type:"free"},extensible:false,lines:[{id:"L1",label:"opening — the loss"},{id:"L2",label:"line 2"},{id:"L3",label:"line 3"},{id:"L4",label:"middle — remembrance"},{id:"L5",label:"line 5"},{id:"L6",label:"line 6"},{id:"L7",label:"closing — acceptance or question"}]},
   {cat:"Elegiac",name:"Epitaph",desc:"Short rhyming memorial verse.",meter:{type:"syllable",counts:[8,8,8,8]},extensible:false,lines:[{id:"L1",label:"line 1",rhyme:"A",syl:8},{id:"L2",label:"line 2",rhyme:"A",syl:8},{id:"L3",label:"line 3",rhyme:"B",syl:8},{id:"L4",label:"line 4",rhyme:"B",syl:8}]},
-  {cat:"Acrostic & visual",name:"Acrostic",desc:"First letters of each line spell a word.",meter:{type:"free"},extensible:false,lines:[{id:"A1",label:"line 1"},{id:"A2",label:"line 2"},{id:"A3",label:"line 3"},{id:"A4",label:"line 4"},{id:"A5",label:"line 5"}]},
+  {cat:"Acrostic & visual",name:"Acrostic",desc:"First letters of each line spell a word.",meter:{type:"free"},acrostic:true,extensible:false,lines:[{id:"A1",label:"line 1"},{id:"A2",label:"line 2"},{id:"A3",label:"line 3"},{id:"A4",label:"line 4"},{id:"A5",label:"line 5"}]},
   {cat:"Free verse",name:"Free verse",desc:"No fixed rhyme or meter.",meter:{type:"free"},extensible:false,lines:[{id:"L1",label:"line 1"},{id:"L2",label:"line 2"},{id:"L3",label:"line 3"},{id:"L4",label:"line 4"},{id:"L5",label:"line 5"},{id:"L6",label:"line 6"},{id:"L7",label:"line 7"},{id:"L8",label:"line 8"}]},
   {cat:"Free verse",name:"Prose poem",desc:"Poetic density in paragraph form.",meter:{type:"free"},extensible:false,lines:[{id:"P1",label:"paragraph 1"},{id:"P2",label:"paragraph 2"},{id:"P3",label:"paragraph 3"}]},
   {cat:"Custom",name:"Custom form",desc:"Design your own form below.",meter:{type:"free"},custom:true,extensible:false,lines:[]},
@@ -364,64 +863,6 @@ const FORMS=[
 let currentForm=null,currentUnits=0,currentLines=[],lineValues={},meterMode="syllable";
 let closingActive=false,closingLines=[],closingLabel="",maqtaActive=false;
 
-// ── syllable/rhyme helpers ────────────────────────────────────────────────────
-function countSyl(word){word=word.toLowerCase().replace(/[^a-z]/g,"");if(!word)return 0;word=word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/,"").replace(/^y/,"");const m=word.match(/[aeiouy]{1,2}/g);return m?m.length:1;}
-function lineSyl(text){return text.trim().split(/\s+/).filter(Boolean).reduce((s,w)=>s+countSyl(w),0);}
-function getRhymeSound(text){const words=text.trim().split(/\s+/).filter(Boolean);if(!words.length)return null;const last=words[words.length-1].toLowerCase().replace(/[^a-z]/g,"");if(!last)return null;const vi=last.search(/[aeiou]/);return vi===-1?last.slice(-2):last.slice(vi);}
-function slantMatch(a,b){if(!a||!b)return false;if(a===b)return true;if(a.slice(-2)===b.slice(-2))return true;const aC=a.replace(/[aeiou]/g,""),bC=b.replace(/[aeiou]/g,"");return aC===bC&&aC.length>0;}
-
-// ── reference library ─────────────────────────────────────────────────────────
-function openRef(){
-  buildRefBody("");
-  document.getElementById("refSearch").value="";
-  document.getElementById("refDialog").classList.add("open");
-  setTimeout(()=>document.getElementById("refSearch").focus(),50);
-}
-function closeRef(){document.getElementById("refDialog").classList.remove("open");}
-function filterRef(q){buildRefBody(q.toLowerCase().trim());}
-
-function buildRefBody(q){
-  const body=document.getElementById("refBody");body.innerHTML="";
-  const cats={};
-  REF_DATA.forEach(r=>{
-    if(q&&!r.name.toLowerCase().includes(q)&&!r.cat.toLowerCase().includes(q)&&!r.what.toLowerCase().includes(q)&&!r.history.toLowerCase().includes(q)&&!r.use.toLowerCase().includes(q))return;
-    if(!cats[r.cat])cats[r.cat]=[];cats[r.cat].push(r);
-  });
-  if(!Object.keys(cats).length){body.innerHTML='<div class="ref-no-results">No forms match your search.</div>';return;}
-  Object.entries(cats).forEach(([cat,entries])=>{
-    const catH=document.createElement("div");catH.className="ref-cat-header";catH.textContent=cat;body.appendChild(catH);
-    entries.forEach(r=>{
-      const entry=document.createElement("div");entry.className="ref-entry";
-      const hdr=document.createElement("div");hdr.className="ref-entry-header";
-      hdr.innerHTML=`<span class="ref-entry-name">${r.name}</span><span class="ref-entry-cat">${r.cat}</span><span class="ref-chevron">▶</span>`;
-      hdr.addEventListener("click",()=>{
-        const wasOpen=entry.classList.contains("open");
-        entry.classList.toggle("open",!wasOpen);
-      });
-      const entryBody=document.createElement("div");entryBody.className="ref-entry-body";
-      entryBody.innerHTML=`
-        <div class="ref-section"><div class="ref-section-label">What it is</div>${r.what}</div>
-        <div class="ref-section"><div class="ref-section-label">History</div>${r.history}</div>
-        <div class="ref-section"><div class="ref-section-label">Best used for</div>${r.use}</div>`;
-      // "use this form" button if it exists in FORMS
-      const formMatch=FORMS.find(f=>f.name===r.name);
-      if(formMatch){
-        const useBtn=document.createElement("button");useBtn.className="ref-use-btn";useBtn.textContent=`→ switch to ${r.name}`;
-        useBtn.addEventListener("click",()=>{
-          closeRef();
-          const sel=document.getElementById("formSelect");sel.value=r.name;
-          loadForm(formMatch);
-        });
-        entryBody.appendChild(useBtn);
-      }
-      entry.appendChild(hdr);entry.appendChild(entryBody);body.appendChild(entry);
-      // auto-expand if search query matches
-      if(q)entry.classList.add("open");
-    });
-  });
-}
-
-// ── form loading ──────────────────────────────────────────────────────────────
 function buildSelectEl(){
   const sel=document.getElementById("formSelect");
   const cats={};FORMS.forEach(f=>{if(!cats[f.cat])cats[f.cat]=[];cats[f.cat].push(f);});
@@ -438,52 +879,33 @@ function buildSelectEl(){
 
 function loadForm(f){
   currentForm=f;lineValues={};closingActive=false;closingLines=[];closingLabel="";maqtaActive=false;
+  Object.keys(lineState).forEach(k=>delete lineState[k]);
   document.getElementById("customPanel").classList.toggle("visible",!!f.custom);
   document.getElementById("formSelect").value=f.name;
-  if(f.extensible){currentUnits=f.units||2;rebuildExtensibleLines();}
+  if(!f.acrostic) document.getElementById("acrosticWord").value="";
+  if(f.acrostic){currentLines=f.lines?[...f.lines]:[];buildTemplate();rebuildAcrosticLines();}
+  else if(f.extensible){currentUnits=f.units||2;rebuildExtensibleLines();}
   else{currentLines=f.lines?[...f.lines]:[];buildTemplate();}
   buildSidebar();
   if(f.custom)document.getElementById("templateArea").innerHTML='<div style="font-size:13px;color:var(--color-text-secondary);padding:.5rem 0">configure your form in the sidebar, then click <strong>apply & build template</strong>.</div>';
 }
 function rebuildExtensibleLines(){currentLines=[];for(let i=0;i<currentUnits;i++)currentLines.push(...currentForm.extendFn(i));buildTemplate();buildSidebar();}
-function addUnit(){if(!currentForm.extensible||closingActive||maqtaActive)return;currentLines.push(...currentForm.extendFn(currentUnits));currentUnits++;buildTemplate();buildSidebar();}
-function removeUnit(){if(!currentForm.extensible||closingActive||maqtaActive)return;if(currentUnits<=currentForm.minUnits)return;const rem=new Set(currentForm.extendFn(currentUnits-1).map(l=>l.id));rem.forEach(id=>delete lineValues[id]);currentLines=currentLines.filter(l=>!rem.has(l.id));currentUnits--;buildTemplate();buildSidebar();}
+function addUnit(){if(!currentForm.extensible||closingActive||maqtaActive)return;pushUndo();currentLines.push(...currentForm.extendFn(currentUnits));currentUnits++;buildTemplate();buildSidebar();}
+function removeUnit(){if(!currentForm.extensible||closingActive||maqtaActive)return;if(currentUnits<=currentForm.minUnits)return;pushUndo();const rem=new Set(currentForm.extendFn(currentUnits-1).map(l=>l.id));rem.forEach(id=>{delete lineValues[id];delete lineState[id];});currentLines=currentLines.filter(l=>!rem.has(l.id));currentUnits--;buildTemplate();buildSidebar();}
+function triggerClose(){if(!currentForm.hasClosing)return;pushUndo();if(currentForm.closingFn==="pantoum")document.getElementById("pantoumDialog").classList.add("open");else if(currentForm.closingFn==="terza")applyTerzaClose();else if(currentForm.closingFn==="ghazal")applyGhazalClose();}
+function applyPantoumClose(variant){document.getElementById("pantoumDialog").classList.remove("open");closingLines=[{id:"cls_l1",label:"closing, line 1",repeats:"s1l2"},{id:"cls_l2",label:"closing, line 2",repeats:"s1l3"},{id:"cls_l3",label:"closing, line 3",repeats:"s1l4"},{id:"cls_l4",label:variant==="circular"?"closing, line 4 — poem's first line":"closing, line 4",repeats:"s1l1"}];closingLabel=variant==="circular"?"closing stanza — circular (Option A)":"closing stanza — reversed (Option B)";closingActive=true;buildTemplate();buildSidebar();}
+function applyTerzaClose(){const L=["A","B","C","D","E","F","G","H"],rb=L[currentUnits%L.length];closingLines=[{id:"tz_cls_l1",label:"closing couplet, line 1",rhyme:rb,syl:10},{id:"tz_cls_l2",label:"closing couplet, line 2",rhyme:rb,syl:10}];closingLabel="closing couplet";closingActive=true;buildTemplate();buildSidebar();}
+function applyGhazalClose(){maqtaActive=true;closingActive=true;closingLabel="maqta";closingLines=[];buildTemplate();buildSidebar();}
+function removeClosing(){pushUndo();closingActive=false;closingLines.forEach(l=>{delete lineValues[l.id];delete lineState[l.id];});closingLines=[];closingLabel="";maqtaActive=false;buildTemplate();buildSidebar();}
 
-// ── closing stanza ────────────────────────────────────────────────────────────
-function triggerClose(){if(!currentForm.hasClosing)return;if(currentForm.closingFn==="pantoum")document.getElementById("pantoumDialog").classList.add("open");else if(currentForm.closingFn==="terza")applyTerzaClose();else if(currentForm.closingFn==="ghazal")applyGhazalClose();}
-function closePantoumDialog(){document.getElementById("pantoumDialog").classList.remove("open");}
-function applyPantoumClose(variant){
-  closePantoumDialog();
-  closingLines=variant==="circular"?[
-    {id:"cls_l1",label:"closing, line 1 (= stanza 1, line 2)",repeats:"s1l2"},
-    {id:"cls_l2",label:"closing, line 2 (= stanza 1, line 3)",repeats:"s1l3"},
-    {id:"cls_l3",label:"closing, line 3 (= stanza 1, line 4)",repeats:"s1l4"},
-    {id:"cls_l4",label:"closing, line 4 (= stanza 1, line 1 — the poem's first line)",repeats:"s1l1"},
-  ]:[
-    {id:"cls_l1",label:"closing, line 1 (= stanza 1, line 2)",repeats:"s1l2"},
-    {id:"cls_l2",label:"closing, line 2 (= stanza 1, line 3)",repeats:"s1l3"},
-    {id:"cls_l3",label:"closing, line 3 (= stanza 1, line 4)",repeats:"s1l4"},
-    {id:"cls_l4",label:"closing, line 4 (= stanza 1, line 1)",repeats:"s1l1"},
-  ];
-  closingLabel=variant==="circular"?"closing stanza — circular (Option A)":"closing stanza — reversed (Option B)";
-  closingActive=true;buildTemplate();buildSidebar();
-}
-function applyTerzaClose(){
-  const L=["A","B","C","D","E","F","G","H"],rb=L[currentUnits%L.length];
-  closingLines=[{id:"tz_cls_l1",label:"closing couplet, line 1",rhyme:rb,syl:10},{id:"tz_cls_l2",label:"closing couplet, line 2",rhyme:rb,syl:10}];
-  closingLabel="closing couplet";closingActive=true;buildTemplate();buildSidebar();
-}
-function applyGhazalClose(){maqtaActive=true;closingActive=true;closingLabel="maqta (signature couplet)";closingLines=[];buildTemplate();buildSidebar();}
-function removeClosing(){closingActive=false;closingLines.forEach(l=>delete lineValues[l.id]);closingLines=[];closingLabel="";maqtaActive=false;buildTemplate();buildSidebar();}
-
-// ── sidebar ───────────────────────────────────────────────────────────────────
 function buildSidebar(){
   document.getElementById("formInfo").textContent=currentForm.desc;
   const m=currentForm.meter,mp=document.getElementById("meterPanel"),md=document.getElementById("meterDesc");
   if(!m||m.type==="free"){mp.style.display="none";}
-  else{mp.style.display="block";if(m.type==="syllable")md.textContent=`Syllabic${m.counts?" ("+m.counts.join("-")+" syl)":""}`;else if(m.type==="stress")md.textContent=`${m.foot} ${FEET_NAME[m.feet]||m.feet+" feet"}`;document.getElementById("meterModeDesc").textContent=meterMode==="syllable"?"Counts syllables per line.":"Shows stress pattern (S=stressed, u=unstressed).";}
-  const all=[...currentLines,...closingLines];
-  const unique=[...new Set(all.map(l=>l.rhyme).filter(Boolean))];
+  else{mp.style.display="block";if(m.type==="syllable")md.textContent=`Syllabic${m.counts?" ("+m.counts.join("-")+" syl)":""}`;else if(m.type==="stress")md.textContent=`${m.foot} ${FEET_NAME[m.feet]||m.feet+" feet"}`;document.getElementById("meterModeDesc").textContent=meterMode==="syllable"?"Counts syllables instantly (JS word table + heuristic).":"AI-detected stress pattern.";}
+  // Acrostic panel
+  document.getElementById("acrosticPanel").style.display = currentForm.acrostic ? "block" : "none";
+  const all=[...currentLines,...closingLines],unique=[...new Set(all.map(l=>l.rhyme).filter(Boolean))];
   const sd=document.getElementById("schemeDisplay");
   if(!unique.length){sd.innerHTML="";return;}
   let html=`<div class="sb-h" style="margin-top:8px">rhyme scheme</div>`;
@@ -491,7 +913,6 @@ function buildSidebar(){
   sd.innerHTML=html;
 }
 
-// ── template ──────────────────────────────────────────────────────────────────
 function buildTemplate(){
   const area=document.getElementById("templateArea");area.innerHTML="";
   let lastSec="";
@@ -500,7 +921,7 @@ function buildTemplate(){
     if(sec&&sec!==lastSec&&currentLines.length>4){const sh=document.createElement("div");sh.className="sec-header";sh.textContent=sec;area.appendChild(sh);lastSec=sec;}
     area.appendChild(makeLineGroup(line,idx));
   });
-  if(maqtaActive&&currentLines.length>=2){const note=document.createElement("div");note.className="maqta-note";note.textContent="✦ maqta — the couplet above is your signature stanza. Include your name or poet persona in it.";area.appendChild(note);}
+  if(maqtaActive&&currentLines.length>=2){const note=document.createElement("div");note.className="maqta-note";note.textContent="✦ maqta — the couplet above is your signature stanza. Include your name or poet persona.";area.appendChild(note);}
   if(closingActive&&closingLines.length>0){const ch=document.createElement("div");ch.className="closing-header";ch.innerHTML=`<span>${closingLabel}</span><span class="closing-badge">closing</span>`;area.appendChild(ch);closingLines.forEach((line,idx)=>area.appendChild(makeLineGroup(line,currentLines.length+idx)));}
   if(currentForm.extensible){
     const bar=document.createElement("div");bar.className="extend-bar";
@@ -508,12 +929,16 @@ function buildTemplate(){
     const lbl=document.createElement("span");lbl.className="extend-bar-label";lbl.textContent=`${currentUnits} ${ul}${currentUnits!==1?"s":""}${closingActive?" + closing":""}`;bar.appendChild(lbl);
     const addBtn=document.createElement("button");addBtn.className="ebtn";addBtn.textContent=`+ ${ul}`;addBtn.disabled=closingActive||maqtaActive;addBtn.onclick=addUnit;bar.appendChild(addBtn);
     const remBtn=document.createElement("button");remBtn.className="ebtn";remBtn.textContent=`− ${ul}`;remBtn.disabled=closingActive||maqtaActive||currentUnits<=currentForm.minUnits;remBtn.onclick=removeUnit;bar.appendChild(remBtn);
-    if(currentForm.hasClosing){
-      if(!closingActive&&!maqtaActive){const clsBtn=document.createElement("button");clsBtn.className="ebtn close-btn";clsBtn.textContent="⊕ close poem";clsBtn.onclick=triggerClose;bar.appendChild(clsBtn);}
-      else{const unclsBtn=document.createElement("button");unclsBtn.className="ebtn unclose-btn";unclsBtn.textContent="✕ remove closing";unclsBtn.onclick=removeClosing;bar.appendChild(unclsBtn);}
-    }
+    if(currentForm.hasClosing){if(!closingActive&&!maqtaActive){const cb=document.createElement("button");cb.className="ebtn close-btn";cb.textContent="⊕ close poem";cb.onclick=triggerClose;bar.appendChild(cb);}else{const ub=document.createElement("button");ub.className="ebtn unclose-btn";ub.textContent="✕ remove closing";ub.onclick=removeClosing;bar.appendChild(ub);}}
     area.appendChild(bar);
   }
+  [...currentLines,...closingLines].forEach(l=>{
+    const el=document.getElementById("line_"+l.id);if(!el)return;
+    if(l.repeats&&lineValues[l.repeats])el.value=lineValues[l.repeats];
+    else if(lineValues[l.id])el.value=lineValues[l.id];
+    const st=getLS(l.id);
+    if(st.syllables!==null)applyMeterFeedback(l.id,l,currentLines.indexOf(l),st.syllables,null);
+  });
   checkAllRhymes();
 }
 
@@ -525,47 +950,42 @@ function makeLineGroup(line,idx){
   if(line.syl)lbl+=` <span style="font-size:10px;color:var(--color-text-tertiary)">(~${line.syl} syl)</span>`;
   if(isRep)lbl+=` <span style="font-size:10px;color:var(--color-text-tertiary)">↺ auto-fills</span>`;
   lbl+="</div>";grp.innerHTML=lbl;
+  // Inject acrostic badge into label if applicable
+  if(line.acrosticLetter){
+    const labelEl=grp.querySelector('.line-label');
+    if(labelEl)renderAcrosticBadge(labelEl,line);
+  }
   const ta=document.createElement("textarea");
   ta.className="line-input"+(isRep?" repeated":"");ta.rows=1;ta.id="line_"+line.id;
-  ta.placeholder=isRep?"(repeats from "+line.repeats+")":line.label+"…";ta.readOnly=isRep;
-  if(isRep){ta.value=lineValues[line.repeats]||"";}else{ta.value=lineValues[line.id]||"";}
-  if(!isRep){ta.addEventListener("input",()=>{lineValues[line.id]=ta.value;ta.style.height="32px";ta.style.height=ta.scrollHeight+"px";propagateRepeats(line.id,ta.value);checkLine(ta,line,idx);checkAllRhymes();});}
+  // Acrostic: placeholder shows the required starting letter
+  const ph=isRep?"(repeats from "+line.repeats+")":line.acrosticLetter?line.acrosticLetter.toLowerCase()+"…":line.label+"…";
+  ta.placeholder=ph;ta.readOnly=isRep;
+  if(!isRep){
+    ta.addEventListener("input",()=>{
+      lineValues[line.id]=ta.value;ta.style.height="32px";ta.style.height=ta.scrollHeight+"px";
+      propagateRepeats(line.id,ta.value);
+      // Refresh acrostic badge live as user types
+      if(line.acrosticLetter){const labelEl=grp.querySelector('.line-label');if(labelEl)renderAcrosticBadge(labelEl,line);}
+    });
+    ta.addEventListener("blur",()=>onLineBlur(ta,line,idx));
+  }
   grp.appendChild(ta);
-  if(currentForm.meter&&currentForm.meter.type==="stress"&&currentForm.meter.foot&&currentForm.meter.foot!=="none"&&!isRep){const hint=document.createElement("div");hint.className="meter-hint";hint.textContent="pattern: "+(FOOT_PAT[currentForm.meter.foot]||"").repeat(currentForm.meter.feet||5)+" (S=stressed u=unstressed)";grp.appendChild(hint);}
+  if(currentForm.meter&&currentForm.meter.type==="stress"&&currentForm.meter.foot&&currentForm.meter.foot!=="none"&&!isRep){const hint=document.createElement("div");hint.className="meter-hint";hint.textContent="expected: "+(FOOT_PAT[currentForm.meter.foot]||"").repeat(currentForm.meter.feet||5)+" (S=stressed u=unstressed)";grp.appendChild(hint);}
   const fb=document.createElement("div");fb.className="line-fb";fb.id="fb_"+line.id;grp.appendChild(fb);
   return grp;
 }
 
 function propagateRepeats(srcId,val){[...currentLines,...closingLines].forEach(l=>{if(l.repeats===srcId){const el=document.getElementById("line_"+l.id);if(el){el.value=val;lineValues[l.id]=val;}}});}
 
-function checkLine(ta,line,idx){
-  const togMeter=document.getElementById("togMeter").checked,fb=document.getElementById("fb_"+line.id),val=ta.value.trim();
-  if(!val){ta.className="line-input"+(line.repeats?" repeated":"");fb.textContent="";fb.className="line-fb";return;}
-  const m=currentForm.meter;
-  if(!togMeter||!m||m.type==="free"||line.syl===null||line.syl===undefined){ta.className="line-input ok"+(line.repeats?" repeated":"");fb.textContent="";fb.className="line-fb ok";return;}
-  const syl=lineSyl(val);
-  if(meterMode==="syllable"){
-    const target=line.syl||(m.counts?m.counts[idx%m.counts.length]:null);
-    if(!target){ta.className="line-input ok"+(line.repeats?" repeated":"");fb.textContent="";return;}
-    const diff=syl-target;
-    if(diff===0){ta.className="line-input ok"+(line.repeats?" repeated":"");fb.textContent=`✓ ${syl} syl`;fb.className="line-fb ok";}
-    else if(Math.abs(diff)<=1){ta.className="line-input warn"+(line.repeats?" repeated":"");fb.textContent=`${syl} syl (target ~${target})`;fb.className="line-fb warn";}
-    else{ta.className="line-input error"+(line.repeats?" repeated":"");fb.textContent=`${syl} syl — target ${target} (${diff>0?"too many":"too few"})`;fb.className="line-fb error";}
-  }else{
-    const pat=val.trim().split(/\s+/).filter(Boolean).map(w=>{const s=countSyl(w);if(s===1)return"x";let p="";for(let i=0;i<s;i++)p+=(i%2===0)?"S":"u";return p;}).join("");
-    fb.textContent=`stress: ${pat} (${syl} syl)`;fb.className="line-fb ok";ta.className="line-input ok"+(line.repeats?" repeated":"");
-  }
+function setMeterMode(mode){
+  meterMode=mode;
+  document.getElementById("btnSyl").classList.toggle("active",mode==="syllable");
+  document.getElementById("btnStress").classList.toggle("active",mode==="stress");
+  document.getElementById("meterModeDesc").textContent=mode==="syllable"?"Counts syllables instantly (JS word table + heuristic).":"AI-detected stress pattern.";
+  // Re-apply with current syllable counts
+  const all=[...currentLines,...closingLines];
+  all.forEach((l,i)=>{const st=getLS(l.id);if(st.syllables!==null)applyMeterFeedback(l.id,l,i,st.syllables,null);});
 }
-
-function checkAllRhymes(){
-  const togRhyme=document.getElementById("togRhyme").checked,useSlant=document.getElementById("togSlant").checked;
-  if(!togRhyme)return;
-  const all=[...currentLines,...closingLines],groups={};
-  all.forEach(l=>{if(!l.rhyme)return;const k=l.rhyme.toUpperCase().replace(/\d/,"");if(!groups[k])groups[k]=[];const el=document.getElementById("line_"+l.id);if(el&&el.value.trim())groups[k].push({id:l.id,sound:getRhymeSound(el.value)});});
-  Object.values(groups).forEach(grp=>{if(grp.length<2)return;grp.forEach((g,i)=>{const el=document.getElementById("line_"+g.id),fb=document.getElementById("fb_"+g.id);if(!el||!el.value.trim())return;const others=grp.filter((_,j)=>j!==i).map(x=>x.sound);if(others.every(s=>s===null))return;const matches=others.some(s=>useSlant?slantMatch(g.sound,s):(g.sound===s));if(!matches&&fb){const prev=fb.textContent;fb.textContent=prev?prev+" · rhyme mismatch":"rhyme mismatch";fb.className="line-fb error";}});});
-}
-
-function setMeterMode(mode){meterMode=mode;document.getElementById("btnSyl").classList.toggle("active",mode==="syllable");document.getElementById("btnStress").classList.toggle("active",mode==="stress");document.getElementById("meterModeDesc").textContent=mode==="syllable"?"Counts syllables per line.":"Shows stress pattern (S=stressed, u=unstressed).";currentLines.forEach((l,i)=>{const el=document.getElementById("line_"+l.id);if(el)checkLine(el,l,i);});}
 
 function applyCustomForm(){
   const nLines=Math.max(1,Math.min(60,parseInt(document.getElementById("cpLines").value)||8));
@@ -576,20 +996,541 @@ function applyCustomForm(){
   currentLines=[];
   for(let i=0;i<nLines;i++){const letter=schemeLetters.length?schemeLetters[i%schemeLetters.length]:null;currentLines.push({id:"CL"+(i+1),label:"line "+(i+1),rhyme:letter||null,syl:targetSyl});}
   currentForm={...currentForm,desc:`Custom: ${nLines} lines${schemeRaw?" · "+schemeRaw+" rhyme":""}${foot!=="none"?" · "+foot+" "+FEET_NAME[feet]:""}`,meter:foot==="none"?{type:"free"}:{type:"stress",foot,feet}};
-  lineValues={};buildTemplate();buildSidebar();
+  lineValues={};Object.keys(lineState).forEach(k=>delete lineState[k]);buildTemplate();buildSidebar();
 }
 
-function clearPoem(){lineValues={};closingActive=false;closingLines=[];closingLabel="";maqtaActive=false;if(currentForm.extensible)rebuildExtensibleLines();else{currentLines=currentForm.lines?[...currentForm.lines]:[];buildTemplate();}document.getElementById("outputArea").style.display="none";}
-function showPoem(){const all=[...currentLines,...closingLines];const lines=all.map(l=>{const el=document.getElementById("line_"+l.id);return el?el.value:"";});const title=document.getElementById("poemTitle").value||"untitled";const out=document.getElementById("outputArea");out.style.display="block";out.textContent=title+"\n\n"+lines.join("\n");}
+function clearPoem(){
+  pushUndo();
+  lineValues={};Object.keys(lineState).forEach(k=>delete lineState[k]);
+  closingActive=false;closingLines=[];closingLabel="";maqtaActive=false;
+  if(currentForm.extensible)rebuildExtensibleLines();
+  else{currentLines=currentForm.lines?[...currentForm.lines]:[];buildTemplate();}
+  document.getElementById("outputArea").style.display="none";
+}
+function showPoem(){
+  const all=[...currentLines,...closingLines];
+  const lines=all.map(l=>{const el=document.getElementById("line_"+l.id);return el?el.value:"";});
+  const title=document.getElementById("poemTitle").value||"untitled";
+  const out=document.getElementById("outputArea");out.style.display="block";
+  out.textContent=title+"\n\n"+lines.join("\n");
+}
 function copyPoem(){showPoem();navigator.clipboard.writeText(document.getElementById("outputArea").textContent).catch(()=>{});}
+
+function openRef(){buildRefBody("");document.getElementById("refSearch").value="";document.getElementById("refDialog").classList.add("open");setTimeout(()=>document.getElementById("refSearch").focus(),50);}
+function filterRef(q){buildRefBody(q.toLowerCase().trim());}
+function buildRefBody(q){
+  const body=document.getElementById("refBody");body.innerHTML="";
+  const cats={};
+  REF_DATA.forEach(r=>{
+    if(q&&![r.name,r.cat,r.what,r.history,r.use].some(s=>s.toLowerCase().includes(q)))return;
+    if(!cats[r.cat])cats[r.cat]=[];cats[r.cat].push(r);
+  });
+  if(!Object.keys(cats).length){body.innerHTML='<div class="ref-no-results">No forms match your search.</div>';return;}
+  Object.entries(cats).forEach(([cat,entries])=>{
+    const catH=document.createElement("div");catH.className="ref-cat-header";catH.textContent=cat;body.appendChild(catH);
+    entries.forEach(r=>{
+      const entry=document.createElement("div");entry.className="ref-entry";
+      const hdr=document.createElement("div");hdr.className="ref-entry-header";
+      hdr.innerHTML=`<span class="ref-entry-name">${r.name}</span><span class="ref-entry-cat">${r.cat}</span><span class="ref-chevron">▶</span>`;
+      hdr.addEventListener("click",()=>entry.classList.toggle("open"));
+      const eb=document.createElement("div");eb.className="ref-entry-body";
+      eb.innerHTML=`<div class="ref-section"><div class="ref-section-label">What it is</div>${r.what}</div><div class="ref-section"><div class="ref-section-label">History</div>${r.history}</div><div class="ref-section"><div class="ref-section-label">Best used for</div>${r.use}</div>`;
+      const fm=FORMS.find(f=>f.name===r.name);
+      if(fm){const ub=document.createElement("button");ub.className="ref-use-btn";ub.textContent=`→ switch to ${r.name}`;ub.addEventListener("click",()=>{document.getElementById("refDialog").classList.remove("open");document.getElementById("formSelect").value=r.name;loadForm(fm);});eb.appendChild(ub);}
+      entry.appendChild(hdr);entry.appendChild(eb);body.appendChild(entry);
+      if(q)entry.classList.add("open");
+    });
+  });
+}
 
 document.getElementById("togRhyme").addEventListener("change",checkAllRhymes);
 document.getElementById("togSlant").addEventListener("change",checkAllRhymes);
-document.getElementById("togMeter").addEventListener("change",()=>{currentLines.forEach((l,i)=>{const el=document.getElementById("line_"+l.id);if(el)checkLine(el,l,i);});});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.getElementById("pantoumDialog").classList.remove("open");document.getElementById("refDialog").classList.remove("open");}});
+document.getElementById("togHints").addEventListener("change",()=>{
+  [...currentLines,...closingLines].forEach(l=>renderFeedback(l.id));
+});
+document.getElementById("togMeter").addEventListener("change",()=>{
+  const all=[...currentLines,...closingLines];
+  all.forEach((l,i)=>{const st=getLS(l.id);if(st.syllables!==null)applyMeterFeedback(l.id,l,i,st.syllables,null);else{getLS(l.id).meterText="";getLS(l.id).meterClass="line-fb";renderFeedback(l.id);}});
+});
+
+// ═══════════════════════════════════════════════════════════════
+// ACROSTIC ENFORCEMENT
+// ═══════════════════════════════════════════════════════════════
+
+let acrosticWord = '';
+
+function getAcrosticWord() {
+  return document.getElementById('acrosticWord').value.replace(/[^a-zA-Z]/g,'').toUpperCase();
+}
+
+// Rebuild the acrostic line list to match the target word length
+function rebuildAcrosticLines() {
+  if (!currentForm.acrostic) return;
+  const word = getAcrosticWord();
+  acrosticWord = word;
+  if (!word) {
+    // Default 5 blank lines when no word set
+    currentLines = [{id:'A1',label:'line 1'},{id:'A2',label:'line 2'},{id:'A3',label:'line 3'},{id:'A4',label:'line 4'},{id:'A5',label:'line 5'}];
+  } else {
+    currentLines = word.split('').map((ch, i) => ({
+      id: 'A' + (i + 1),
+      label: 'line ' + (i + 1),
+      acrosticLetter: ch,
+    }));
+  }
+  // Prune stale lineValues/lineState for removed lines
+  const validIds = new Set(currentLines.map(l => l.id));
+  Object.keys(lineValues).forEach(k => { if (!validIds.has(k)) delete lineValues[k]; });
+  Object.keys(lineState).forEach(k => { if (!validIds.has(k)) delete lineState[k]; });
+  buildTemplate();
+}
+
+// Check whether a line's content starts with its assigned acrostic letter
+function checkAcrosticLine(lineId) {
+  const line = currentLines.find(l => l.id === lineId);
+  if (!line || !line.acrosticLetter) return null; // no target
+  const el = document.getElementById('line_' + lineId);
+  const val = (el ? el.value : lineValues[lineId] || '').trim();
+  if (!val) return 'empty';
+  const firstChar = val.replace(/^[^a-zA-Z]*/, '')[0]; // skip leading punctuation
+  return firstChar && firstChar.toUpperCase() === line.acrosticLetter ? 'match' : 'mismatch';
+}
+
+// Inject acrostic letter badge into a line label element
+function renderAcrosticBadge(labelEl, line) {
+  // Remove any existing badge
+  const old = labelEl.querySelector('.acrostic-letter');
+  if (old) old.remove();
+  if (!line.acrosticLetter) return;
+  const status = checkAcrosticLine(line.id);
+  const badge = document.createElement('span');
+  badge.className = 'acrostic-letter ' + (status === 'match' ? 'match' : status === 'mismatch' ? 'mismatch' : 'empty');
+  badge.textContent = line.acrosticLetter;
+  badge.title = status === 'match' ? '✓ starts with ' + line.acrosticLetter : 'should start with ' + line.acrosticLetter;
+  labelEl.prepend(badge);
+}
+
+// Refresh all acrostic badges (called on input)
+function refreshAcrosticBadges() {
+  if (!currentForm || !currentForm.acrostic) return;
+  currentLines.forEach(line => {
+    const grp = document.getElementById('line_' + line.id);
+    if (!grp) return;
+    const labelEl = grp.closest('.line-group')?.querySelector('.line-label');
+    if (labelEl) renderAcrosticBadge(labelEl, line);
+  });
+}
+
+// Wire acrostic word input
+document.getElementById('acrosticWord').addEventListener('input', () => {
+  pushUndo();
+  rebuildAcrosticLines();
+  buildSidebar();
+});
+
+// ═══════════════════════════════════════════════════════════════
+// TXT DOWNLOAD
+// ═══════════════════════════════════════════════════════════════
+
+function downloadTxt() {
+  const all = [...currentLines, ...closingLines];
+  const lines = all.map(l => { const el = document.getElementById('line_' + l.id); return el ? el.value : ''; });
+  const title = document.getElementById('poemTitle').value.trim() || 'untitled';
+  const text = title + '\n\n' + lines.join('\n');
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = title.replace(/[^a-z0-9\s-]/gi, '').trim().replace(/\s+/g, '_') + '.txt';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
 
 buildSelectEl();
-loadForm(FORMS[0]);
+
+// ═══════════════════════════════════════════════════════════════
+// SAVE / LOAD SYSTEM
+// ═══════════════════════════════════════════════════════════════
+
+const AUTOSAVE_KEY = 'autosave';
+const DRAFTS_INDEX_KEY = 'drafts-index';
+let autosaveTimer = null;
+let isDirty = false;
+
+// ── Snapshot helpers ───────────────────────────────────────────
+function captureSnapshot() {
+  return {
+    formName: currentForm.name,
+    title: document.getElementById('poemTitle').value,
+    lineValues: { ...lineValues },
+    meterMode,
+    currentUnits: currentForm.extensible ? currentUnits : null,
+    closingActive,
+    closingLines: closingLines.map(l => ({ ...l })),
+    closingLabel,
+    maqtaActive,
+    savedAt: Date.now(),
+  };
+}
+
+async function restoreSnapshot(snap) {
+  const form = FORMS.find(f => f.name === snap.formName);
+  if (!form) return;
+
+  // Restore form without clearing lineValues yet
+  currentForm = form;
+  document.getElementById('formSelect').value = form.name;
+  document.getElementById('customPanel').classList.toggle('visible', !!form.custom);
+
+  if (form.extensible) {
+    currentUnits = snap.currentUnits || form.units || 2;
+    currentLines = [];
+    for (let i = 0; i < currentUnits; i++) currentLines.push(...form.extendFn(i));
+  } else {
+    currentLines = form.lines ? [...form.lines] : [];
+  }
+
+  meterMode = snap.meterMode || 'syllable';
+  document.getElementById('btnSyl').classList.toggle('active', meterMode === 'syllable');
+  document.getElementById('btnStress').classList.toggle('active', meterMode === 'stress');
+
+  closingActive = snap.closingActive || false;
+  closingLines = snap.closingLines || [];
+  closingLabel = snap.closingLabel || '';
+  maqtaActive = snap.maqtaActive || false;
+
+  // Restore line values
+  lineValues = { ...snap.lineValues };
+  Object.keys(lineState).forEach(k => delete lineState[k]);
+
+  buildTemplate();
+  buildSidebar();
+
+  // Set title
+  document.getElementById('poemTitle').value = snap.title || '';
+
+  // Push saved values into textarea elements
+  [...currentLines, ...closingLines].forEach(l => {
+    const el = document.getElementById('line_' + l.id);
+    if (el && lineValues[l.id]) {
+      el.value = lineValues[l.id];
+      el.style.height = '32px';
+      el.style.height = el.scrollHeight + 'px';
+    }
+  });
+
+  checkAllRhymes();
+}
+
+// ── Auto-save (debounced, 2s after last keystroke) ─────────────
+function scheduleAutosave() {
+  isDirty = true;
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(doAutosave, 2000);
+}
+
+async function doAutosave() {
+  const snap = captureSnapshot();
+  try {
+    await window.storage.set(AUTOSAVE_KEY, JSON.stringify(snap));
+    showAutosaveBadge('● autosaved');
+    isDirty = false;
+  } catch (e) {
+    showAutosaveBadge('⚠ save failed');
+  }
+}
+
+function showAutosaveBadge(msg) {
+  const badge = document.getElementById('autosaveBadge');
+  const label = document.getElementById('autosaveLabel');
+  label.textContent = msg;
+  badge.style.opacity = '1';
+  clearTimeout(badge._hideTimer);
+  badge._hideTimer = setTimeout(() => { badge.style.opacity = '0'; }, 2500);
+}
+
+// ── Named saves ────────────────────────────────────────────────
+function openSaveNameDialog() {
+  const title = document.getElementById('poemTitle').value.trim();
+  document.getElementById('saveNameInput').value = title || '';
+  document.getElementById('saveNameDialog').classList.add('open');
+  setTimeout(() => document.getElementById('saveNameInput').select(), 50);
+}
+
+document.getElementById('saveNameConfirm').addEventListener('click', async () => {
+  const name = document.getElementById('saveNameInput').value.trim();
+  if (!name) return;
+  document.getElementById('saveNameDialog').classList.remove('open');
+  await saveNamedDraft(name);
+});
+
+document.getElementById('saveNameInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('saveNameConfirm').click();
+});
+
+async function saveNamedDraft(name) {
+  const snap = captureSnapshot();
+  snap.draftName = name;
+  const id = 'draft-' + Date.now();
+  try {
+    // Save the draft data
+    await window.storage.set(id, JSON.stringify(snap));
+    // Update the index
+    let index = [];
+    try {
+      const idx = await window.storage.get(DRAFTS_INDEX_KEY);
+      if (idx) index = JSON.parse(idx.value);
+    } catch (e) { index = []; }
+    index.unshift({ id, name, formName: snap.formName, savedAt: snap.savedAt });
+    // Keep max 50 drafts
+    if (index.length > 50) {
+      const pruned = index.splice(50);
+      for (const p of pruned) { try { await window.storage.delete(p.id); } catch (e) {} }
+    }
+    await window.storage.set(DRAFTS_INDEX_KEY, JSON.stringify(index));
+    showAutosaveBadge(`💾 "${name}" saved`);
+  } catch (e) {
+    showAutosaveBadge('⚠ save failed');
+  }
+}
+
+// ── Drafts panel ───────────────────────────────────────────────
+async function openDrafts() {
+  document.getElementById('draftsDialog').classList.add('open');
+  await renderDraftsList();
+}
+
+async function renderDraftsList() {
+  const area = document.getElementById('draftsListArea');
+  area.innerHTML = '<div style="font-size:12px;color:var(--color-text-tertiary);padding:.5rem 0">loading drafts…</div>';
+
+  let index = [];
+  try {
+    const idx = await window.storage.get(DRAFTS_INDEX_KEY);
+    if (idx) index = JSON.parse(idx.value);
+  } catch (e) { index = []; }
+
+  // Also check for autosave
+  let hasAutosave = false;
+  let autosaveSnap = null;
+  try {
+    const as = await window.storage.get(AUTOSAVE_KEY);
+    if (as) { autosaveSnap = JSON.parse(as.value); hasAutosave = true; }
+  } catch (e) {}
+
+  area.innerHTML = '';
+
+  if (!hasAutosave && !index.length) {
+    area.innerHTML = '<div style="font-size:12px;color:var(--color-text-tertiary);padding:.75rem 0;text-align:center">no saved drafts yet.<br><br>click <strong>save</strong> to name and save your current poem.</div>';
+    return;
+  }
+
+  // Autosave entry
+  if (hasAutosave) {
+    const when = autosaveSnap.savedAt ? relativeTime(autosaveSnap.savedAt) : 'recently';
+    area.appendChild(makeDraftRow({
+      id: AUTOSAVE_KEY,
+      name: (autosaveSnap.title || 'untitled') + ' — autosave',
+      formName: autosaveSnap.formName,
+      savedAt: autosaveSnap.savedAt,
+    }, true));
+  }
+
+  if (index.length && hasAutosave) {
+    const sep = document.createElement('div');
+    sep.style.cssText = 'font-size:10px;font-weight:700;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.07em;padding:.5rem 0 .3rem;border-bottom:.5px solid var(--color-border-tertiary);margin-bottom:.3rem';
+    sep.textContent = 'named drafts';
+    area.appendChild(sep);
+  }
+
+  index.forEach(entry => area.appendChild(makeDraftRow(entry, false)));
+}
+
+function makeDraftRow(entry, isAuto) {
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;align-items:center;gap:6px;padding:.45rem .5rem;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);margin-bottom:.3rem;background:var(--color-background-primary)';
+
+  const info = document.createElement('div');
+  info.style.cssText = 'flex:1;min-width:0';
+  const nameEl = document.createElement('div');
+  nameEl.style.cssText = 'font-size:12px;font-weight:500;color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
+  nameEl.textContent = (isAuto ? '⟳ ' : '') + entry.name;
+  const metaEl = document.createElement('div');
+  metaEl.style.cssText = 'font-size:10px;color:var(--color-text-tertiary);margin-top:1px';
+  metaEl.textContent = (entry.formName || '') + (entry.savedAt ? ' · ' + relativeTime(entry.savedAt) : '');
+  info.appendChild(nameEl);
+  info.appendChild(metaEl);
+  row.appendChild(info);
+
+  const loadBtn = document.createElement('button');
+  loadBtn.textContent = 'load';
+  loadBtn.style.cssText = 'font-size:11px;padding:2px 9px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);color:var(--color-text-primary);cursor:pointer;flex-shrink:0';
+  loadBtn.addEventListener('click', async () => {
+    if (isDirty) {
+      if (!confirm('You have unsaved changes. Load this draft anyway?')) return;
+    }
+    document.getElementById('draftsDialog').classList.remove('open');
+    try {
+      const raw = await window.storage.get(entry.id);
+      if (!raw) { alert('Draft not found.'); return; }
+      const snap = JSON.parse(raw.value);
+      await restoreSnapshot(snap);
+      showAutosaveBadge(`📂 "${entry.name}" loaded`);
+      isDirty = false;
+    } catch (e) { alert('Failed to load draft.'); }
+  });
+  row.appendChild(loadBtn);
+
+  if (!isAuto) {
+    const delBtn = document.createElement('button');
+    delBtn.textContent = '✕';
+    delBtn.title = 'delete draft';
+    delBtn.style.cssText = 'font-size:11px;padding:2px 7px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:transparent;color:var(--color-text-tertiary);cursor:pointer;flex-shrink:0';
+    delBtn.addEventListener('click', async () => {
+      if (!confirm(`Delete "${entry.name}"?`)) return;
+      try {
+        await window.storage.delete(entry.id);
+        let index = [];
+        const idx = await window.storage.get(DRAFTS_INDEX_KEY);
+        if (idx) index = JSON.parse(idx.value);
+        index = index.filter(e => e.id !== entry.id);
+        await window.storage.set(DRAFTS_INDEX_KEY, JSON.stringify(index));
+        row.remove();
+      } catch (e) { alert('Failed to delete.'); }
+    });
+    row.appendChild(delBtn);
+  }
+
+  return row;
+}
+
+function relativeTime(ts) {
+  const diff = Date.now() - ts;
+  const m = Math.floor(diff / 60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  const d = Math.floor(h / 24);
+  return `${d}d ago`;
+}
+
+// ── Wire up auto-save to all input events ──────────────────────
+const templateArea = document.getElementById('templateArea');
+templateArea.addEventListener('input', scheduleAutosave);
+document.getElementById('poemTitle').addEventListener('input', scheduleAutosave);
+
+// ═══════════════════════════════════════════════════════════════
+// UNDO / REDO SYSTEM
+// ═══════════════════════════════════════════════════════════════
+
+const UNDO_MAX = 20;
+let undoStack = [];   // past states (oldest → newest)
+let redoStack = [];   // future states after undo
+let undoSuspended = false; // true while restoring, so restore doesn't self-push
+
+function pushUndo() {
+  if (undoSuspended) return;
+  const snap = captureSnapshot();
+  // Don't push if identical to top of stack
+  if (undoStack.length) {
+    const top = undoStack[undoStack.length - 1];
+    if (JSON.stringify(top.lineValues) === JSON.stringify(snap.lineValues) &&
+        top.title === snap.title && top.formName === snap.formName) return;
+  }
+  undoStack.push(snap);
+  if (undoStack.length > UNDO_MAX) undoStack.shift();
+  redoStack = []; // new action clears redo
+  updateUndoButtons();
+}
+
+function updateUndoButtons() {
+  const u = document.getElementById('undoBtn');
+  const r = document.getElementById('redoBtn');
+  if (u) u.disabled = undoStack.length <= 1;
+  if (r) r.disabled = redoStack.length === 0;
+}
+
+async function undoHistory() {
+  if (undoStack.length <= 1) return;
+  // Push current onto redo before stepping back
+  redoStack.push(undoStack.pop());
+  const snap = undoStack[undoStack.length - 1];
+  undoSuspended = true;
+  await restoreSnapshot(snap);
+  undoSuspended = false;
+  updateUndoButtons();
+  scheduleAutosave();
+}
+
+async function redoHistory() {
+  if (!redoStack.length) return;
+  const snap = redoStack.pop();
+  undoStack.push(snap);
+  undoSuspended = true;
+  await restoreSnapshot(snap);
+  undoSuspended = false;
+  updateUndoButtons();
+  scheduleAutosave();
+}
+
+// Push initial state once the form loads — seed the stack
+// (called from restoreSnapshot and loadForm wrappers below)
+
+// ── Patch loadForm to seed undo stack ─────────────────────────
+// Push initial snapshot after startup resolves (see IIFE below)
+
+function toggleHelp() {
+  const el = document.getElementById('shortcutHelp');
+  const btn = document.getElementById('helpBtn');
+  const open = el.style.display === 'none';
+  el.style.display = open ? 'block' : 'none';
+  btn.style.opacity = open ? '1' : '.5';
+}
+
+// Wire title blur to undo stack
+document.getElementById('poemTitle').addEventListener('blur', pushUndo);
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); openSaveNameDialog(); }
+  if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key === 'z') { e.preventDefault(); undoHistory(); }
+  if ((e.ctrlKey || e.metaKey) && (e.shiftKey && e.key === 'z' || e.key === 'y')) { e.preventDefault(); redoHistory(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); showPoem(); }
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'c') { e.preventDefault(); copyPoem(); }
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'd') { e.preventDefault(); downloadTxt(); }
+  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'x') { e.preventDefault(); clearPoem(); }
+  if (e.key === '?' && !e.ctrlKey && !e.metaKey && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') { toggleHelp(); }
+  if (e.key === 'Escape') {
+    document.getElementById('pantoumDialog').classList.remove('open');
+    document.getElementById('refDialog').classList.remove('open');
+    document.getElementById('draftsDialog').classList.remove('open');
+    document.getElementById('saveNameDialog').classList.remove('open');
+    // Also close help if open
+    const help = document.getElementById('shortcutHelp');
+    if (help && help.style.display !== 'none') toggleHelp();
+  }
+});
+
+// ── Startup: load autosave or default, then seed undo stack ───
+(async () => {
+  try {
+    const as = await window.storage.get(AUTOSAVE_KEY);
+    if (as) {
+      const snap = JSON.parse(as.value);
+      const hasContent = snap.lineValues && Object.values(snap.lineValues).some(v => v && v.trim());
+      if (hasContent) {
+        await restoreSnapshot(snap);
+        showAutosaveBadge('⟳ draft restored');
+        isDirty = false;
+        undoStack = [captureSnapshot()];
+        updateUndoButtons();
+        return;
+      }
+    }
+  } catch (e) {}
+  loadForm(FORMS[0]);
+  undoStack = [captureSnapshot()];
+  updateUndoButtons();
+})();
 </script>
 </body>
 </html>
